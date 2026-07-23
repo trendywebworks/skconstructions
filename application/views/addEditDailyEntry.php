@@ -15,14 +15,14 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                 <input type="hidden" name="id" value="<?php echo (isset($de_details))?$de_details['id']:'0'; ?>">
                 <input type="hidden" name="reference_id" value="<?php echo (isset($de_details))?$de_details['reference_id']:'0'; ?>">
                 <div class="row">
-                    <div class="col-6 mb-4">
+                    <div class="col-4 mb-4">
                         <label for="date">Date <span class="text-danger">*</span></label>
                         <div id="datepickerx" class="input-group datex" data-date-format="dd-mm-yyyy">
                             <input class="form-control" type="date" name="date" value="<?php echo (isset($details) && isset($details['entry_date']))?date('d-m-Y', strtotime($details['entry_date'])):date('d-m-Y'); ?>"  required/>
                             <span class="input-group-addon"></span>
                         </div>
                     </div>
-                    <div class="col-6 mb-4">
+                    <div class="col-4 mb-4">
                         <label for="exampleFormControlSelect1">Site <span class="text-danger">*</span></label>
                         <select class="form-select" id="exampleFormControlSelect1" name="site" required>
                             <?php echo $sites; ?>
@@ -62,9 +62,11 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                     <?php echo (isset($divForm))?$divForm:''; ?>
                 </div>
 
-                <div class="form-group mb-4">
-                    <label for="exampleFormControlTextarea1">Remarks</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="remarks"><?php echo (isset($de_details) && isset($de_details['remarks']))?$de_details['remarks']:''; ?></textarea>
+                <div class="row">
+                    <div class="form-group mb-4 col-4">
+                        <label for="exampleFormControlTextarea1">Remarks</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="remarks"><?php echo (isset($de_details) && isset($de_details['remarks']))?$de_details['remarks']:''; ?></textarea>
+                    </div>
                 </div>
 
                 <?php if($userdata['role_id'] == 1 ) { ?>
