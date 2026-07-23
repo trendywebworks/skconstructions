@@ -115,7 +115,7 @@ class Dailyentry extends CI_Controller {
 		);
 		
 // 		$data['theads'] = ['<input type="checkbox" name="selectall" class="selectall" id="select-all">', 'date', 'expense_type', 'expense_id', 'amount', 'expense_date', 'status', 'remarks', 'action'];
-        $data['theads'] = ['<input type="checkbox" name="selectall" class="selectall" id="select-all">S.No', 'date', 'particular', 'expense', 'income', 'remarks', 'status', 'action'];
+        $data['theads'] = ['<input type="checkbox" name="selectall" class="selectall" id="select-all">', 'date', 'particular', 'expense', 'income', 'remarks', 'status', 'action'];
 		$data['tfooter'] = array(
 			'colspan' 	=> 3,
 			'title'	  	=> 'Total',

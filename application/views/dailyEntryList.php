@@ -5,8 +5,8 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
     <div class="col-xl-12 col-lg-12 col-md-12 mt-md-0 mt-4">
         <div class="form widget-content-area br-8">
             <form action="<?php echo base_url('daily-entry-list'); ?>" method="post" id="listFilter">
-                <div class="row mb-4">
-                    <div class="col-md-3" id="status">
+                <div class="row g-3 align-items-end mb-4 sk-list-filter-row">
+                    <div class="col-md-3" id="filter-status">
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-select mb-3" id="status" name="status">
@@ -29,10 +29,9 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                             <input type="date" name="to" value="<?php echo isset($toDate)?$toDate:''; ?>" class="form-control dayDateFormat">
                         </div>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-auto">
                         <div class="form-group">
-                            <label for="filter">&nbsp;</label>
-                            <input class="btn btn-primary btn-sm _effect--ripple waves-effect waves-light" type="submit" name="filter" value="Filter">
+                            <input class="btn btn-primary sk-filter-submit _effect--ripple waves-effect waves-light" type="submit" name="filter" value="Filter">
                         </div>
                     </div>
                 </div>
@@ -97,7 +96,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                                 $edit = $titles['edit'].'/'.$li['id'];
                             ?>
                                 <tr>
-                                    <td><input type="checkbox" name="selectRow[]" class="selectRow" value="<?php echo $li['id']; ?>"><?php echo $nm+1; ?></td>
+                                    <td class="text-center"><input type="checkbox" name="selectRow[]" class="selectRow" value="<?php echo $li['id']; ?>"></td>
                                     <td><span class="inv-date"> <?php echo commonDateFormat($li['entry_date']); ?> </span></td>
                                     <?php 
                                     foreach($li as $key => $value) 
@@ -179,15 +178,12 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                 </table>
                 <?php if($userdata['role_id'] == 1 ) { ?>
                 <div class="row">
-                    <div class="col-sm-6 mt-3"></div>
-                    <div class="col-sm-2 mt-3">
-                        <input type="submit" class="btn btn-lg btn-success" name="approve" value="Approve">
-                    </div>
-                    <div class="col-sm-2 mt-3">
-                        <input type="submit" class="btn btn-lg btn-warning" name="pending" value="Pending">
-                    </div>
-                    <div class="col-sm-2 mt-3">
-                        <input type="submit" class="btn btn-lg btn-danger" name="delete" value="Delete">
+                    <div class="col-12 mt-3">
+                        <div class="btn-group sk-bulk-actions" role="group" aria-label="Bulk status actions">
+                            <input type="submit" class="btn btn-success" name="approve" value="Approve">
+                            <input type="submit" class="btn btn-warning" name="pending" value="Pending">
+                            <input type="submit" class="btn btn-danger" name="delete" value="Delete">
+                        </div>
                     </div>
                 </div>
                 <?php } ?>
