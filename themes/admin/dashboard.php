@@ -586,7 +586,7 @@
                         <div class="widget widget-table-two">
 
                             <div class="widget-heading">
-                                <h5 class="">Recent Orders Latest Orders</h5>
+                                <h5 class="">Recent Orders Latest Orders New</h5>
                             </div>
 
                             <div class="widget-content">
