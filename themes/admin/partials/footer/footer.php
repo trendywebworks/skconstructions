@@ -39,6 +39,9 @@
 <script src="src/plugins/src/table/datatable/custom_miscellaneous.js"></script>
 <!-- END DATATABLES SCRIPTS --> 
 
+<!-- AUTOSUGGEST DROPDOWN SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- DATEPICKER SCRIPTS -->
 <script src=
 "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
@@ -85,10 +88,50 @@
                     .datepicker(datepickerOptions);
             });
         });
+	    </script>
+
+    <script>
+    function initAutosuggestDropdowns(scope) {
+        if (typeof $.fn.select2 === 'undefined') {
+            return;
+        }
+
+        var $scope = scope ? $(scope) : $(document);
+        var $selects = $scope.is('select') ? $scope : $scope.find('select');
+
+        $selects.each(function () {
+            var $select = $(this);
+            var selectId = $select.attr('id') || '';
+            var selectName = $select.attr('name') || '';
+            var optionCount = $select.find('option').length;
+            var shouldAutosuggest = optionCount >= 8 || $select.is('[data-autosuggest="true"]') || selectId === 'option';
+            var skipAutosuggest = $select.is('[data-skip-autosuggest="true"]') || $.inArray(selectName, ['status', 'expense_type', 'report_type']) !== -1;
+
+            if (!shouldAutosuggest || skipAutosuggest) {
+                return;
+            }
+
+            if ($select.hasClass('select2-hidden-accessible')) {
+                $select.select2('destroy');
+            }
+
+            $select.select2({
+                tags: selectId === 'option',
+                placeholder: $select.find('option:first').text() || 'Select',
+                tokenSeparators: selectId === 'option' ? [','] : [],
+                allowClear: !$select.prop('required'),
+                width: '100%'
+            });
+        });
+    }
+
+    $(function () {
+        initAutosuggestDropdowns(document);
+    });
     </script>
 
 
-</body>
+	</body>
 </html>
 
 <script type="text/javascript">
