@@ -27,4 +27,9 @@ class Marketloans_Model extends MY_Model
 		return $result->row_array();
 	}
 
+	public function getTotalAmount()
+	{
+		return $this->db->select("COALESCE(SUM(total_amount), 0) as total_market_loan")->from($this->_table)->where(array("$this->_table.status" => 'active'))->get()->row();
+	}
+
 }
