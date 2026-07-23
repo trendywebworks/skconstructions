@@ -39,6 +39,7 @@ class Partners extends CI_Controller {
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $this->_select, array('status != ' => 'deleted'));
 		$data['folder'] = $this->_folder;
 		$data['theads'] = ['date', 'full_name', 'phone_number', 'email-address', 'ID_proof', 'status', 'remarks', 'action'];
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -191,6 +192,22 @@ class Partners extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete partners.');
+			redirect('partners-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Partner deleted successfully');
+		redirect('partners-list');
 	}
 
 	public function formCustomization($selectid = '')

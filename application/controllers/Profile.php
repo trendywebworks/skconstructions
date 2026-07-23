@@ -78,8 +78,16 @@ class Profile extends CI_Controller {
 
 	public function deleteAccount($id)
 	{
+		$userdata = $this->User_model->getUserDetails($this->_user_id);
+		if($userdata['role_id'] != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete accounts.');
+			redirect('profile-setting');
+		}
+
 		$insArray = array(
-			'status'		=>	'deleted'
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
 		);
 		$this->common_model->updateWhere($this->_table, array('id' => $id), $insArray);
 		$this->session->set_flashdata('success', 'Account deleted successfully');

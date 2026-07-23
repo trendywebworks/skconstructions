@@ -39,6 +39,7 @@ class Officestaff extends CI_Controller {
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $this->_select, array('status != ' => 'deleted'));
 		$data['folder'] = $this->_folder;
 		$data['theads'] = ['date', 'name', 'phone_number', 'email-address', 'position', 'joining_date', 'ID_proof', 'status', 'remarks', 'action'];
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -199,6 +200,22 @@ class Officestaff extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete office staff.');
+			redirect('office-staff-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Office Staff deleted successfully');
+		redirect('office-staff-list');
 	}
 
 	public function formCustomization($selectid = '')

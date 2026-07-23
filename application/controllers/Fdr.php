@@ -44,6 +44,7 @@ class Fdr extends CI_Controller {
 			'title'	  	=> 'Total',
 			'sum_cols'	=> [3,4],
 			'empty' 	=> 3);
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -163,6 +164,22 @@ class Fdr extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete FDR entries.');
+			redirect('fdr-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'FDR deleted successfully');
+		redirect('fdr-list');
 	}
 
 	public function formCustomization($selectid = '')

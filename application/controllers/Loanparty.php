@@ -37,6 +37,7 @@ class Loanparty extends CI_Controller {
 
 		$select = 'id,created_at,entry_date,party_name,phone,address,status,remarks';
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $select, array('status != ' => 'deleted'));
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -151,6 +152,22 @@ class Loanparty extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete loan parties.');
+			redirect('loan-party-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Loan Party deleted successfully');
+		redirect('loan-party-list');
 	}
 
 }

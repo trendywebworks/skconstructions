@@ -149,6 +149,7 @@
         </div>
     </form>
 </div>
+<?php if(isset($details['role_id']) && $details['role_id'] == 1) { ?>
 <div class="col-xl-6 col-lg-6 col-md-6 layout-spacing">
     <form id="social" class="section widget-content-area br-8">
         <div class="info">
@@ -159,6 +160,7 @@
         </div>
     </form>
 </div>
+<?php } ?>
 
 </div>
 
@@ -171,6 +173,7 @@
 </div>
 
 
+<?php if(isset($details['role_id']) && $details['role_id'] == 1) { ?>
 <!-- Modal -->
 <div id="deleteaccount" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -190,3 +193,4 @@
 
   </div>
 </div>
+<?php } ?>

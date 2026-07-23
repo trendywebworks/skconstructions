@@ -37,6 +37,7 @@ class Product extends CI_Controller {
 
 		$select = 'id,created_at,entry_date,product_name,hsn_sac,status,remarks';
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $select, array('status != ' => 'deleted'));
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -149,6 +150,22 @@ class Product extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete products.');
+			redirect('products-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Product deleted successfully');
+		redirect('products-list');
 	}
 
 	public function formCustomization($selectid = '')

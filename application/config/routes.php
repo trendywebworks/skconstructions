@@ -74,6 +74,7 @@ $route['pay-partner-list'] = 'Paytopartner';
 $route['pay-partner-add'] = 'Paytopartner/add';
 $route['pay-partner-edit/(:num)'] = 'Paytopartner/edit/$1';
 $route['pay-partner-view/(:num)'] = 'Paytopartner/view/$1';
+$route['pay-partner-delete/(:num)'] = 'Paytopartner/delete/$1';
 
 // Market Loans
 $route['market-loans-list'] = 'Marketloans';
@@ -87,48 +88,56 @@ $route['vehicles-expenses-list'] = 'Vehicleexpenses';
 $route['vehicles-expense-add'] = 'Vehicleexpenses/add';
 $route['vehicles-expense-edit/(:num)'] = 'Vehicleexpenses/edit/$1';
 $route['vehicles-expense-view/(:num)'] = 'Vehicleexpenses/view/$1';
+$route['vehicles-expense-delete/(:num)'] = 'Vehicleexpenses/delete/$1';
 
 // Purchase
 $route['purchase-list'] = 'Purchase';
 $route['purchase-add'] = 'Purchase/add';
 $route['purchase-edit/(:num)'] = 'Purchase/edit/$1';
 $route['purchase-view/(:num)'] = 'Purchase/view/$1';
+$route['purchase-delete/(:num)'] = 'Purchase/delete/$1';
 
 // GST Bill
 $route['gst-bill-list'] = 'Gstbill';
 $route['gst-bill-add'] = 'Gstbill/add';
 $route['gst-bill-edit/(:num)'] = 'Gstbill/edit/$1';
 $route['gst-bill-view/(:num)'] = 'Gstbill/view/$1';
+$route['gst-bill-delete/(:num)'] = 'Gstbill/delete/$1';
 
 // FDR
 $route['fdr-list'] = 'Fdr';
 $route['fdr-add'] = 'Fdr/add';
 $route['fdr-edit/(:num)'] = 'Fdr/edit/$1';
 $route['fdr-view/(:num)'] = 'Fdr/view/$1';
+$route['fdr-delete/(:num)'] = 'Fdr/delete/$1';
 
 // CC Account
 $route['cc-account-list'] = 'Ccaccount';
 $route['cc-account-add'] = 'Ccaccount/add';
 $route['cc-account-edit/(:num)'] = 'Ccaccount/edit/$1';
 $route['cc-account-view/(:num)'] = 'Ccaccount/view/$1';
+$route['cc-account-delete/(:num)'] = 'Ccaccount/delete/$1';
 
 // Products
 $route['products-list'] = 'Product';
 $route['product-add'] = 'Product/add';
 $route['product-edit/(:num)'] = 'Product/edit/$1';
 $route['product-view/(:num)'] = 'Product/view/$1';
+$route['product-delete/(:num)'] = 'Product/delete/$1';
 
 // Office Expense
 $route['office-expense-list'] = 'Officeexpense';
 $route['office-expense-add'] = 'Officeexpense/add';
 $route['office-expense-edit/(:num)'] = 'Officeexpense/edit/$1';
 $route['office-expense-view/(:num)'] = 'Officeexpense/view/$1';
+$route['office-expense-delete/(:num)'] = 'Officeexpense/delete/$1';
 
 // Staff Loans
 $route['staff-loans-list'] = 'Staffloans';
 $route['staff-loan-add'] = 'Staffloans/add';
 $route['staff-loan-edit/(:num)'] = 'Staffloans/edit/$1';
 $route['staff-loan-view/(:num)'] = 'Staffloans/view/$1';
+$route['staff-loan-delete/(:num)'] = 'Staffloans/delete/$1';
 
 // Daily Reports
 $route['reports-daily'] = 'Reports/daily_report';
@@ -151,6 +160,7 @@ $route['partners-list'] = 'Partners';
 $route['partner-add'] = 'Partners/add';
 $route['partner-edit/(:num)'] = 'Partners/edit/$1';
 $route['partner-view/(:num)'] = 'Partners/view/$1';
+$route['partner-delete/(:num)'] = 'Partners/delete/$1';
 
 // Vehicles
 $route['vehicles-list'] = 'Vehicles';
@@ -164,6 +174,7 @@ $route['office-staff-list'] = 'Officestaff';
 $route['office-staff-add'] = 'Officestaff/add';
 $route['office-staff-edit/(:num)'] = 'Officestaff/edit/$1';
 $route['office-staff-view/(:num)'] = 'Officestaff/view/$1';
+$route['office-staff-delete/(:num)'] = 'Officestaff/delete/$1';
 
 // Loan Party
 $route['loan-party-list'] = 'Loanparty';
@@ -177,18 +188,21 @@ $route['expense-type-list'] = 'Expensetype';
 $route['expense-type-add'] = 'Expensetype/add';
 $route['expense-type-edit/(:num)'] = 'Expensetype/edit/$1';
 $route['expense-type-view/(:num)'] = 'Expensetype/view/$1';
+$route['expense-type-delete/(:num)'] = 'Expensetype/delete/$1';
 
 // Suppliers
 $route['suppliers-list'] = 'Supplier';
 $route['supplier-add'] = 'Supplier/add';
 $route['supplier-edit/(:num)'] = 'Supplier/edit/$1';
 $route['supplier-view/(:num)'] = 'Supplier/view/$1';
+$route['supplier-delete/(:num)'] = 'Supplier/delete/$1';
 
 // Banks
 $route['banks-list'] = 'Banks';
 $route['bank-add'] = 'Banks/add';
 $route['bank-edit/(:num)'] = 'Banks/edit/$1';
 $route['bank-view/(:num)'] = 'Banks/view/$1';
+$route['bank-delete/(:num)'] = 'Banks/delete/$1';
 
 // Users
 $route['users-list'] = 'Users';
@@ -210,6 +224,7 @@ $route['vehicles-running-list'] = 'Vehiclerunning';
 $route['vehicles-running-add'] = 'Vehiclerunning/add';
 $route['vehicles-running-edit/(:num)'] = 'Vehiclerunning/edit/$1';
 $route['vehicles-running-view/(:num)'] = 'Vehiclerunning/view/$1';
+$route['vehicles-running-delete/(:num)'] = 'Vehiclerunning/delete/$1';
 
 // Clear Tables
 $route['clear-tables'] = 'Testcontroller/cleartables';

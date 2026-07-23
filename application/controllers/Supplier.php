@@ -37,6 +37,7 @@ class Supplier extends CI_Controller {
 		$select = 'id,created_at,entry_date,firm_name,contact_person,address,phone_number,email_address,status,remarks';
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $select, array('status != ' => 'deleted'));
 		$data['theads'] = ['date', 'firm_name', 'contact_person', 'address', 'phone_number', 'email-address', 'status', 'remarks', 'action'];
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -157,5 +158,21 @@ class Supplier extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete suppliers.');
+			redirect('suppliers-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Supplier deleted successfully');
+		redirect('suppliers-list');
 	}
 }
