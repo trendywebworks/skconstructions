@@ -25,24 +25,20 @@ class Dashboard extends MY_Controller {
 		);
 
 		//Revenue By current year
-		$profitMon = [];
+		$monthlyTotalIncome = [];
+		$monthlyTotalExpenses = [];
 		for($mi=1; $mi<=12;$mi++)
 		{
 			$all = $this->Dailyentry_Model->monthlyCurrentYearIncome($mi);
-			$profitMon[$mi] = array(
-				'month'	=>	$mi,
-				'profit' => (isset($all['profit']))?$all['profit']:0,
-				'lose' => (isset($all['lose']))?$all['lose']:0,
-			);
-			$allProfits[] = (isset($all['profit']))?$all['profit']:0;
-			$allLoses[] = (isset($all['lose']))?$all['lose']:0;
+			$monthlyTotalIncome[] = (isset($all['profit']))?$all['profit']:0;
+			$monthlyTotalExpenses[] = (isset($all['lose']))?$all['lose']:0;
 		}
-		$data['allProfits'] = implode(',', $allProfits);
-		$data['allLoses'] = implode(',', $allLoses);
+		$data['monthlyTotalIncome'] = implode(',', $monthlyTotalIncome);
+		$data['monthlyTotalExpenses'] = implode(',', $monthlyTotalExpenses);
 
 		//All expenses
 		$data['allExpenses'] = array(
-			'daily_expense'			=>	array_sum($allProfits),
+			'daily_expense'			=>	array_sum($monthlyTotalExpenses),
 			'vehicle_expense'		=>	$this->VehicleExpenses_Model->getAllVehicleExpensesYearly()->total_veh_exp,
 			'office_expense'		=>	$this->Officeexpense_Model->getAllOfficeExpensesYearly()->total_off_exp);
 		// echo '<pre>';print_r($data);exit;

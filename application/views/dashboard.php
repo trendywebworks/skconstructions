@@ -1,3 +1,17 @@
+<style>
+    .daily-expense-card .daily-expense-content {
+        padding: 0 16px 16px;
+    }
+    .daily-expense-card .daily-expense-detail {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    .daily-expense-card .daily-expense-amount {
+        flex-shrink: 0;
+        margin-left: 12px;
+    }
+</style>
+
 <div class="row layout-top-spacing">
 
     <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
@@ -19,8 +33,8 @@
             </div>
 
             <div class="widget-content">
-                <input type="hidden" name="allProfits" id="allProfits" value="<?php echo $allProfits; ?>">
-                <input type="hidden" name="allLoses" id="allLoses" value="<?php echo $allLoses; ?>">
+                <input type="hidden" name="monthlyTotalIncome" id="monthlyTotalIncome" value="<?php echo $monthlyTotalIncome; ?>">
+                <input type="hidden" name="monthlyTotalExpenses" id="monthlyTotalExpenses" value="<?php echo $monthlyTotalExpenses; ?>">
                 <div id="revenueMonthly"></div>
             </div>
         </div>
@@ -41,7 +55,7 @@
     </div>
 
     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 layout-spacing">
-        <div class="widget-two">
+        <div class="widget-two daily-expense-card">
             <div class="widget-content">
                 <div class="w-numeric-value">
                     <div class="w-content">
@@ -52,15 +66,15 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                     </div>
                 </div>
-                <div class="w-chart">
+                <div class="daily-expense-content">
                     <input type="hidden" name="daily_profit" id="daily_profit" value="<?php echo $daily_expense['profit']; ?>">
                     <input type="hidden" name="daily_lose" id="daily_lose" value="<?php echo $daily_expense['lose']; ?>">
-                    <div id="daily-sales" style="display: none;"></div>
-                    <div class="daily-expense-list mt-3">
+                    <div id="daily-sales" class="d-none"></div>
+                    <div class="daily-expense-list">
                         <?php if(isset($latestDailyExpenses) && count($latestDailyExpenses) > 0) { ?>
                             <?php foreach($latestDailyExpenses as $dailyExpense) { ?>
                                 <div class="d-flex align-items-start justify-content-between py-2 border-bottom">
-                                    <div class="me-3">
+                                    <div class="daily-expense-detail">
                                         <h6 class="mb-1"><?php echo htmlspecialchars($dailyExpense['particular'], ENT_QUOTES, 'UTF-8'); ?></h6>
                                         <p class="mb-0 text-muted">
                                             <?php echo commonDateFormat($dailyExpense['entry_date']); ?>
@@ -72,7 +86,7 @@
                                             <p class="mb-0 text-muted"><?php echo htmlspecialchars($dailyExpense['remarks'], ENT_QUOTES, 'UTF-8'); ?></p>
                                         <?php } ?>
                                     </div>
-                                    <div class="text-end">
+                                    <div class="daily-expense-amount text-end">
                                         <p class="mb-1 text-danger fw-bold"><?php echo numFormat($dailyExpense['amount']); ?></p>
                                         <span class="badge badge-light-<?php echo ($dailyExpense['status'] == 'active')?'success':'warning'; ?>"><?php echo ucfirst($dailyExpense['status']); ?></span>
                                     </div>
