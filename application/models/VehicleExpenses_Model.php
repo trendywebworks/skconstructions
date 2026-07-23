@@ -14,7 +14,7 @@ class VehicleExpenses_Model extends MY_Model
 	public function getAllVehicleExpenses()
 	{
 		$where = array("$this->_table.status != " => 'deleted');
-		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_vehicle_table.vehicle_name as vehicle_name, $this->_table.particular,CONCAT('₹', format(amount,2)),CONCAT('₹', format(income,2)),$this->_table.status,$this->_table.remarks";
+		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_vehicle_table.vehicle_name as vehicle_name, $this->_table.particular,CONCAT('₹', format(amount,0)),CONCAT('₹', format(income,0)),$this->_table.status,$this->_table.remarks";
 		$result = $this->db->select($select)->from($this->_table)->join($this->_vehicle_table, "$this->_vehicle_table.id=$this->_table.vehicle_id", 'inner')->where($where)->order_by('id','DESC')->get();
 		return $result->result_array();
 	}
@@ -22,7 +22,7 @@ class VehicleExpenses_Model extends MY_Model
 	public function getAllVehicleExpensesById($id)
 	{
 		$where = array("$this->_table.status != " => 'deleted', "$this->_table.id" => $id);
-		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_vehicle_table.vehicle_name as vehicle_name,$this->_vehicle_table.vehicle_no, $this->_table.particular,CONCAT('₹', format(amount,2)) as amount,CONCAT('₹', format(income,2)) as income,$this->_table.status,$this->_table.remarks";
+		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_vehicle_table.vehicle_name as vehicle_name,$this->_vehicle_table.vehicle_no, $this->_table.particular,CONCAT('₹', format(amount,0)) as amount,CONCAT('₹', format(income,0)) as income,$this->_table.status,$this->_table.remarks";
 		$result = $this->db->select($select)->from($this->_table)->join($this->_vehicle_table, "$this->_vehicle_table.id=$this->_table.vehicle_id", 'inner')->where($where)->order_by('id','DESC')->get();
 		return $result->row_array();
 	}

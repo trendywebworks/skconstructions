@@ -22,7 +22,7 @@ class Fdr extends CI_Controller {
 		is_permitted();
 		// $this->load->model('Gstbill_Model');
 		$this->_select = 'id,created_at,entry_date,name,description,amount,released_amount,status,remarks';
-		$this->_select_view = "id,created_at,entry_date,name,description,CONCAT('₹', format(amount,2)) as amount,,CONCAT('₹', format(released_amount,2)) as released_amount,status,remarks";
+		$this->_select_view = "id,created_at,entry_date,name,description,CONCAT('₹', format(amount,0)) as amount,,CONCAT('₹', format(released_amount,0)) as released_amount,status,remarks";
 	}
 
 	public function index()
@@ -36,7 +36,7 @@ class Fdr extends CI_Controller {
 			'delete'	=>	$this->_link_start.'-delete'
 		);
 
-		$this->_select = "id,created_at,entry_date,name,description,CONCAT('₹', format(amount,2)) as amount,,CONCAT('₹', format(released_amount,2)) as released_amount,status,remarks";
+		$this->_select = "id,created_at,entry_date,name,description,CONCAT('₹', format(amount,0)) as amount,,CONCAT('₹', format(released_amount,0)) as released_amount,status,remarks";
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $this->_select, array('status != ' => 'deleted'));
 		$data['theads'] = ['date', 'name', 'description', 'amount', 'released_amount', 'status', 'remarks', 'action'];
 		$data['tfooter'] = array(

@@ -468,7 +468,7 @@
 
                                         </div>
                                         <div class="t-rate rate-dec">
-                                            <p><span>-$32.00</span></p>
+                                            <p><span>-$32</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -508,7 +508,7 @@
 
                                         </div>
                                         <div class="t-rate rate-dec">
-                                            <p><span>-$22.00</span></p>
+                                            <p><span>-$22</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -614,7 +614,7 @@
                                                 <td><div class="td-content customer-name"><img src="../src/assets/img/profile-7.jpeg" alt="avatar"><span>Andy King</span></div></td>
                                                 <td><div class="td-content product-brand text-warning">Nike Sport</div></td>
                                                 <td><div class="td-content product-invoice">#76894</div></td>
-                                                <td><div class="td-content pricing"><span class="">$88.00</span></div></td>
+                                                <td><div class="td-content pricing"><span class="">$88</span></div></td>
                                                 <td><div class="td-content"><span class="badge badge-primary">Shipped</span></div></td>
                                             </tr>
                                             <tr>
@@ -635,14 +635,14 @@
                                                 <td><div class="td-content customer-name"><img src="../src/assets/img/profile-4.jpeg" alt="avatar"><span>Irene Collins</span></div></td>
                                                 <td><div class="td-content product-brand text-primary">Speakers</div></td>
                                                 <td><div class="td-content product-invoice">#75844</div></td>
-                                                <td><div class="td-content pricing"><span class="">$84.00</span></div></td>
+                                                <td><div class="td-content pricing"><span class="">$84</span></div></td>
                                                 <td><div class="td-content"><span class="badge badge-danger">Pending</span></div></td>
                                             </tr>
                                             <tr>
                                                 <td><div class="td-content customer-name"><img src="../src/assets/img/profile-11.jpeg" alt="avatar"><span>Sonia Shaw</span></div></td>
                                                 <td><div class="td-content product-brand text-danger">Watch</div></td>
                                                 <td><div class="td-content product-invoice">#76844</div></td>
-                                                <td><div class="td-content pricing"><span class="">$110.00</span></div></td>
+                                                <td><div class="td-content pricing"><span class="">$110</span></div></td>
                                                 <td><div class="td-content"><span class="badge badge-success">Paid</span></div></td>
                                             </tr>
                                         </tbody>
@@ -688,15 +688,15 @@
                                             </tr>
                                             <tr>
                                                 <td><div class="td-content product-name"><img src="../src/assets/img/product-watch.jpg" alt="product"><div class="align-self-center"><p class="prd-name">Watch</p><p class="prd-category text-danger">Accessories</p></div></div></td>
-                                                <td><div class="td-content"><span class="pricing">$88.00</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">$20.00</span></div></td>
+                                                <td><div class="td-content"><span class="pricing">$88</span></div></td>
+                                                <td><div class="td-content"><span class="discount-pricing">$20</span></div></td>
                                                 <td><div class="td-content">66</div></td>
                                                 <td><div class="td-content"><a href="javascript:void(0);" class="text-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-warning feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Ads</a></div></td>
                                             </tr>
                                             <tr>
                                                 <td><div class="td-content product-name"><img src="../src/assets/img/product-laptop.jpg" alt="product"><div class="align-self-center"><p class="prd-name">Laptop</p><p class="prd-category text-primary">Digital</p></div></div></td>
-                                                <td><div class="td-content"><span class="pricing">$110.00</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">$33.00</span></div></td>
+                                                <td><div class="td-content"><span class="pricing">$110</span></div></td>
+                                                <td><div class="td-content"><span class="discount-pricing">$33</span></div></td>
                                                 <td><div class="td-content">35</div></td>
                                                 <td><div class="td-content"><a href="javascript:void(0);" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-info feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Email</a></div></td>
                                             </tr>

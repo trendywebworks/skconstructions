@@ -221,7 +221,7 @@ class Reports extends CI_Controller {
 	// 	$arr = array(
 	// 		'marketl'		=>	array(
 	// 			'table'		=>	'market_loans',
-	// 			'select'	=>	$this->_table.id,$this->_table.created_at,$this->_party_table.party_name as party_name, CONCAT('₹', format(loan_amount,2)),CONCAT('₹', format(interest,2)),total_installments,CONCAT('₹', format(total_amount,2)),$this->_table.remarks),
+	// 			'select'	=>	$this->_table.id,$this->_table.created_at,$this->_party_table.party_name as party_name, CONCAT('₹', format(loan_amount,0)),CONCAT('₹', format(interest,0)),total_installments,CONCAT('₹', format(total_amount,0)),$this->_table.remarks),
 	// 		'purchase'		=>	'purchase',
  //            'gstbill'		=>	'gst_bill',
  //            'ccaccount'		=>	'cc_account',

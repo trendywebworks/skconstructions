@@ -200,7 +200,7 @@ function is_logged_in()
 
 function numFormat($num)
 {
-    return '₹'.number_format($num, 2);
+    return '₹'.number_format($num, 0);
 }
 
 function is_permitted()

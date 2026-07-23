@@ -22,7 +22,7 @@ class Report_Model extends MY_Model
 		{
 			$this->_table = 'market_loans';
 			$this->_party_table = 'loan_party';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_party_table.party_name as party_name, CONCAT('₹', format(loan_amount,2)) as amount,CONCAT('₹', format(interest,2)) as interest,total_installments,CONCAT('₹', format(total_amount,2)) as total_amount,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_party_table.party_name as party_name, CONCAT('₹', format(loan_amount,0)) as amount,CONCAT('₹', format(interest,0)) as interest,total_installments,CONCAT('₹', format(total_amount,0)) as total_amount,$this->_table.remarks";
 
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_party_table, "$this->_party_table.id=$this->_table.party_id", 'inner');
@@ -40,7 +40,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'purchase')
 		{
 			$this->_table = 'purchase';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_table.reference_no,$this->_suppliers_table.firm_name as firm_name,CONCAT('₹', format(total_amount,2)) as total_amount,DATE_FORMAT($this->_table.purchase_date,'%d-%m-%Y') as purchase_date,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_table.reference_no,$this->_suppliers_table.firm_name as firm_name,CONCAT('₹', format(total_amount,0)) as total_amount,DATE_FORMAT($this->_table.purchase_date,'%d-%m-%Y') as purchase_date,$this->_table.remarks";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_suppliers_table, "$this->_suppliers_table.id=$this->_table.supplier_id", 'inner');
 
@@ -57,7 +57,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'gstbill')
 		{
 			$this->_table = 'gst_bill';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_suppliers_table.firm_name as firm_name,$this->_table.particular,$this->_table.quantity, CONCAT('₹', format(amount,2)) as amount,CONCAT(gst, '%') as gst,CONCAT('₹', format(total_amount,2)) as total_amount,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_suppliers_table.firm_name as firm_name,$this->_table.particular,$this->_table.quantity, CONCAT('₹', format(amount,0)) as amount,CONCAT(gst, '%') as gst,CONCAT('₹', format(total_amount,0)) as total_amount,$this->_table.remarks";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_suppliers_table, "$this->_suppliers_table.id=$this->_table.supplier_id", 'inner');
 
@@ -74,7 +74,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'ccaccount')
 		{
 			$this->_table = 'cc_account';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_bank_table.bank_name as party_name, CONCAT('₹', format(loan_amount,2)) as loan_amount,CONCAT('₹', format(interest,2)) as interest,CONCAT('₹', format(total_amount,2)) as total_amount,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_bank_table.bank_name as party_name, CONCAT('₹', format(loan_amount,0)) as loan_amount,CONCAT('₹', format(interest,0)) as interest,CONCAT('₹', format(total_amount,0)) as total_amount,$this->_table.remarks";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_bank_table, "$this->_bank_table.id=$this->_table.bank_id", 'inner');
 
@@ -107,7 +107,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'officeex')
 		{
 			$this->_table = 'office_expenses';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_expense_type_table.expense as cashflow,$this->_expense_type_table.expense_type as expense_name,$this->_office_staffs_table.name as staff_name, CONCAT('₹', format(amount,2)) as amount,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_expense_type_table.expense as cashflow,$this->_expense_type_table.expense_type as expense_name,$this->_office_staffs_table.name as staff_name, CONCAT('₹', format(amount,0)) as amount,$this->_table.remarks";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_expense_type_table, "$this->_expense_type_table.id=$this->_table.expense_type_id", 'inner');
 			$this->db->join($this->_office_staffs_table, "$this->_office_staffs_table.id=$this->_table.staff_id", 'inner');
@@ -130,7 +130,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'staffl')
 		{
 			$this->_table = 'staff_loans';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,2)) as loan_amount,DATE_FORMAT($this->_table.created_at,'%d-%m-%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d-%m-%Y') as loan_last_date,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,0)) as loan_amount,DATE_FORMAT($this->_table.created_at,'%d-%m-%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d-%m-%Y') as loan_last_date,$this->_table.remarks";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_staff_table, "$this->_staff_table.id=$this->_table.employee_id", 'inner');
 
@@ -164,8 +164,8 @@ class Report_Model extends MY_Model
 		{
 			$this->_table = 'pay_partner';
 			$this->_partner_table = 'partners';
-			// $select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_partner_table.full_name as partner_name, CONCAT('₹', format($this->_table.amount,2)) as amount,pay_for,pay_type,$this->_table.remarks";
-			$select = "$this->_partner_table.full_name as partner_name, CONCAT('₹', FORMAT(SUM(CASE WHEN pay_type = 'debit' THEN amount ELSE 0 END), 2)) AS amount, CONCAT('₹', FORMAT(SUM(CASE WHEN pay_type = 'credit' THEN amount ELSE 0 END), 2)) AS paid, CONCAT('₹', FORMAT((SUM(CASE WHEN pay_type = 'debit' THEN amount ELSE 0 END) - SUM(CASE WHEN pay_type = 'credit' THEN amount ELSE 0 END)), 2)) AS balance";
+			// $select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_partner_table.full_name as partner_name, CONCAT('₹', format($this->_table.amount,0)) as amount,pay_for,pay_type,$this->_table.remarks";
+			$select = "$this->_partner_table.full_name as partner_name, CONCAT('₹', FORMAT(SUM(CASE WHEN pay_type = 'debit' THEN amount ELSE 0 END), 0)) AS amount, CONCAT('₹', FORMAT(SUM(CASE WHEN pay_type = 'credit' THEN amount ELSE 0 END), 0)) AS paid, CONCAT('₹', FORMAT((SUM(CASE WHEN pay_type = 'debit' THEN amount ELSE 0 END) - SUM(CASE WHEN pay_type = 'credit' THEN amount ELSE 0 END)), 0)) AS balance";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_partner_table, "$this->_partner_table.id=$this->_table.p_id", 'inner');
 
@@ -184,7 +184,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'vehicls')
 		{
 			$this->_table = 'vehicles';
-			$select = "id,created_at,vehicle_name,vehicle_no,vehicle_purchase_by,CONCAT('₹', format(vehicle_emi,2)) as vehicle_emi,CONCAT('₹', format(down_payment_amount,2)) as down_payment_amount,CONCAT('₹', format(down_payment_by,2)) as down_payment_by,remarks";
+			$select = "id,created_at,vehicle_name,vehicle_no,vehicle_purchase_by,CONCAT('₹', format(vehicle_emi,0)) as vehicle_emi,CONCAT('₹', format(down_payment_amount,0)) as down_payment_amount,CONCAT('₹', format(down_payment_by,0)) as down_payment_by,remarks";
 			$this->db->select($select)->from($this->_table);
 
 			if(isset($search_term) && $search_term!='')

@@ -25,12 +25,12 @@ class Dailyentry_Model extends MY_Model
 	    }
 		$select = "$this->_table.id,$this->_table.entry_date,$this->_expense_type_table.expense_type as particular, CASE 
         WHEN $this->_table.expense_type = 'expense' 
-        THEN CONCAT('₹', FORMAT($this->_table.amount, 2)) 
+        THEN CONCAT('₹', FORMAT($this->_table.amount, 0)) 
         ELSE '' 
     END AS expense,
     CASE 
         WHEN $this->_table.expense_type = 'income' 
-        THEN CONCAT('₹', FORMAT($this->_table.amount, 2)) 
+        THEN CONCAT('₹', FORMAT($this->_table.amount, 0)) 
         ELSE '' 
     END AS income,$this->_table.remarks,$this->_table.status";
 		$this->db->select($select)->from($this->_table)->join($this->_expense_type_table, "$this->_expense_type_table.id=$this->_table.expense_id", 'left')->order_by('id','DESC');
@@ -73,7 +73,7 @@ class Dailyentry_Model extends MY_Model
 	public function getAllDailyEntryListById($id)
 	{
 		$where = array("$this->_table.status !=" => 'deleted', "$this->_table.id" => $id);
-		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_table.expense_type,$this->_table.expense_id,$this->_expense_type_table.expense_type as expense, CONCAT('₹', format(amount,2)) as amount,DATE_FORMAT($this->_table.expense_date,'%d-%m-%Y') as expense_date,$this->_table.status,$this->_table.remarks,$this->_sites_table.site_name as site";
+		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_table.expense_type,$this->_table.expense_id,$this->_expense_type_table.expense_type as expense, CONCAT('₹', format(amount,0)) as amount,DATE_FORMAT($this->_table.expense_date,'%d-%m-%Y') as expense_date,$this->_table.status,$this->_table.remarks,$this->_sites_table.site_name as site";
 		$this->db->select($select)->from($this->_table)->join($this->_expense_type_table, "$this->_expense_type_table.id=$this->_table.expense_id", 'left')->join($this->_sites_table, "$this->_sites_table.id=$this->_table.site", 'inner')->where($where)->order_by('id','DESC');
 		$result = $this->db->get()->row_array();
 		return $result;
@@ -121,12 +121,12 @@ class Dailyentry_Model extends MY_Model
 		$select = "$this->_table.id,DATE_FORMAT($this->_table.entry_date,'%d-%m-%Y') as entry_date,$this->_sites_table.site_name as site,$this->_expense_type_table.expense_type as particular, 
 		CASE 
             WHEN $this->_table.expense_type = 'expense' 
-            THEN CONCAT('₹', FORMAT($this->_table.amount, 2)) 
+            THEN CONCAT('₹', FORMAT($this->_table.amount, 0)) 
             ELSE '' 
         END AS expense,
         CASE 
             WHEN $this->_table.expense_type = 'income' 
-            THEN CONCAT('₹', FORMAT($this->_table.amount, 2)) 
+            THEN CONCAT('₹', FORMAT($this->_table.amount, 0)) 
             ELSE '' 
         END AS income, $this->_table.remarks";
 		$this->db->select($select)->from($this->_table)->join($this->_expense_type_table, "$this->_expense_type_table.id=$this->_table.expense_id", 'left')->join($this->_sites_table, "$this->_sites_table.id=$this->_table.site", 'inner')->where($where)->order_by('id','DESC');
