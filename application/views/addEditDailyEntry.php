@@ -18,7 +18,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                     <div class="col-6 mb-4">
                         <label for="date">Date <span class="text-danger">*</span></label>
                         <div id="datepickerx" class="input-group datex" data-date-format="dd-mm-yyyy">
-                            <input class="form-control" type="date" name="date" value="<?php echo (isset($details) && isset($details['entry_date']))?date('Y-m-d', strtotime($details['entry_date'])):date('Y-m-d'); ?>"  required/>
+                            <input class="form-control" type="date" name="date" value="<?php echo (isset($details) && isset($details['entry_date']))?date('d-m-Y', strtotime($details['entry_date'])):date('d-m-Y'); ?>"  required/>
                             <span class="input-group-addon"></span>
                         </div>
                     </div>
@@ -83,4 +83,3 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
         </div>
     </div>
 </div>
-

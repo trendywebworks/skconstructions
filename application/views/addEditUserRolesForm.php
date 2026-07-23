@@ -7,7 +7,7 @@
                     <div class="col-4 mb-4">
                         <label for="date">Date</label>
                         <div id="datepickerx" class="input-group datex" data-date-format="dd-mm-yyyy">
-                            <input class="form-control" type="date" name="date" value="<?php echo (isset($details) && isset($details[0]['entry_date']))?date('Y-m-d', strtotime($details[0]['entry_date'])):date('Y-m-d'); ?>" />
+                            <input class="form-control" type="date" name="date" value="<?php echo (isset($details) && isset($details[0]['entry_date']))?date('d-m-Y', strtotime($details[0]['entry_date'])):date('d-m-Y'); ?>" />
                             <span class="input-group-addon"></span>
                             <?php echo form_error('date','<p class="field-error">','</p>'); ?>
                         </div>

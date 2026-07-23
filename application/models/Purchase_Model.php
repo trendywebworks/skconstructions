@@ -16,7 +16,7 @@ class Purchase_Model extends MY_Model
 	{
 		$where = array("$this->_table.status != " => 'deleted');
 		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_suppliers_table.firm_name as firm_name,CONCAT('₹', FORMAT(SUM($this->_purchase_details_table.subtotal), 2)) AS bill_amount,CONCAT('₹', FORMAT(SUM($this->_purchase_details_table.gst_amount), 2)) AS gst_amount,
-    CONCAT('₹', format(total_amount,2)) as total_amount,SUM($this->_purchase_details_table.quantity) AS quantity,DATE_FORMAT($this->_table.purchase_date,'%d/%m/%Y') as purchase_date,$this->_table.remarks,$this->_table.status";
+    CONCAT('₹', format(total_amount,2)) as total_amount,SUM($this->_purchase_details_table.quantity) AS quantity,DATE_FORMAT($this->_table.purchase_date,'%d-%m-%Y') as purchase_date,$this->_table.remarks,$this->_table.status";
 		$this->db->select($select)->from($this->_table)->join($this->_suppliers_table, "$this->_suppliers_table.id=$this->_table.supplier_id", 'inner')->join($this->_purchase_details_table, "$this->_purchase_details_table.purchase_id=$this->_table.id", 'inner')->where($where)->order_by('id','DESC');
 		if($limit !='')
 		{

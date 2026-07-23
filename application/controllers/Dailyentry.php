@@ -47,6 +47,8 @@ class Dailyentry extends CI_Controller {
 	        $data['fromDate'] = $this->input->post('from');
 	        $data['toDate'] = $this->input->post('to');
 		    $data['status'] = $this->input->post('status');
+		    $queryFromDate = toDbDateFormat($data['fromDate']);
+		    $queryToDate = toDbDateFormat($data['toDate']);
 	    }
 	    else if($this->input->post('approve') || $this->input->post('pending')  || $this->input->post('delete') ){
 	        $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'));
@@ -79,13 +81,16 @@ class Dailyentry extends CI_Controller {
 	        $data['fromDate'] = $this->input->post('hidfrom');
 	        $data['toDate'] = $this->input->post('hidto');
 		    $data['status'] = $this->input->post('hidstatus');
+		    $queryFromDate = toDbDateFormat($data['fromDate']);
+		    $queryToDate = toDbDateFormat($data['toDate']);
 	    }
 		else
 		{
-		    $data['fromDate'] = $data['toDate'] = date('Y-m-d');
+		    $data['fromDate'] = $data['toDate'] = date('d-m-Y');
+		    $queryFromDate = $queryToDate = date('Y-m-d');
 		    $data['status'] = 'inactive';
 		}
-		$data['list'] = $this->Dailyentry_Model->getAllDailyEntryList('', $data['fromDate'], $data['toDate'], $data['status']);
+		$data['list'] = $this->Dailyentry_Model->getAllDailyEntryList('', $queryFromDate, $queryToDate, $data['status']);
 // 		echo '<pre>';print_r($data['list']);exit;
 		$data['titles'] = array(
 			'title'	=>	$this->_title,

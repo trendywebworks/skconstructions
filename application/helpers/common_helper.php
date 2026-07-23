@@ -18,11 +18,28 @@ function commonDateFormat($date)
 
 function dayDateFormat($date)
 {
-  return date('d M, Y',strtotime($date));
+  return date('d-m-Y',strtotime($date));
 }
 
 function toDbDateFormat($date)
 {
+  if($date === null || $date === '')
+  {
+    return '';
+  }
+
+  $date = trim($date);
+  $formats = array('d-m-Y', 'Y-m-d', 'd/m/Y', 'Y/m/d');
+
+  foreach($formats as $format)
+  {
+    $dt = DateTime::createFromFormat($format, $date);
+    if($dt && $dt->format($format) === $date)
+    {
+      return $dt->format('Y-m-d');
+    }
+  }
+
   return date('Y-m-d',strtotime($date));
 }
 

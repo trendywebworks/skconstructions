@@ -48,7 +48,7 @@
                 autoclose: true,
                 clearBtn: true,
                 container: 'body',
-                format: 'yyyy-mm-dd',
+                format: 'dd-mm-yyyy',
                 orientation: 'bottom auto',
                 todayBtn: 'linked',
                 todayHighlight: true
@@ -64,10 +64,15 @@
                     $field.attr('type', 'text');
                 }
 
+                if (/^\d{4}-\d{2}-\d{2}$/.test($field.val())) {
+                    var parts = $field.val().split('-');
+                    $field.val(parts[2] + '-' + parts[1] + '-' + parts[0]);
+                }
+
                 $field
                     .addClass('sk-datepicker-field')
                     .attr('autocomplete', 'off')
-                    .attr('placeholder', 'yyyy-mm-dd')
+                    .attr('placeholder', 'dd-mm-yyyy')
                     .datepicker(datepickerOptions);
             });
         });

@@ -35,7 +35,7 @@
                                 class="input-groupx datex" 
                                 data-date-format="dd-mm-yyyy">
                                 <input class="form-control" style="" 
-                                    type="date" name="start_date" value="<?php echo (isset($start_date) && $start_date!='')?date('Y-m-d', strtotime($start_date)):''; ?>" />
+                                    type="date" name="start_date" value="<?php echo (isset($start_date) && $start_date!='')?date('d-m-Y', strtotime($start_date)):''; ?>" />
                                 <span class="input-group-addon">
                                 </span>
                             </div>
@@ -48,7 +48,7 @@
                                 class="input-groupx datex" 
                                 data-date-format="dd-mm-yyyy">
                                 <input class="form-control" 
-                                    type="date" name="end_date" value="<?php echo (isset($end_date) && $end_date!='')?date('Y-m-d', strtotime($end_date)):''; ?>" />
+                                    type="date" name="end_date" value="<?php echo (isset($end_date) && $end_date!='')?date('d-m-Y', strtotime($end_date)):''; ?>" />
                                 <span class="input-group-addon">
                                 </span>
                             </div>

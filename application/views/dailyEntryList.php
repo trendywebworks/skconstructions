@@ -69,8 +69,8 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
         <div class="statbox widget box box-shadow">
             <form action="<?php echo base_url('daily-entry-list'); ?>" method="post" id="statusChange">
                 <input type="hidden" name="hidstatus" value="<?php echo isset($status)?$status:'inactive'; ?>">
-                <input type="hidden" name="hidfrom" value="<?php echo isset($fromDate)?$fromDate:date('Y-m-d'); ?>">
-                <input type="hidden" name="hidto" value="<?php echo isset($toDate)?$toDate:date('Y-m-d'); ?>">
+                <input type="hidden" name="hidfrom" value="<?php echo isset($fromDate)?$fromDate:date('d-m-Y'); ?>">
+                <input type="hidden" name="hidto" value="<?php echo isset($toDate)?$toDate:date('d-m-Y'); ?>">
                 <table id="html5-extension" class="table dt-table-hover" style="width:100%">
                     <thead>
                         <tr>

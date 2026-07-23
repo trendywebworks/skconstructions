@@ -14,7 +14,7 @@ class Staffloans_Model extends MY_Model
 	public function getAllStaffLoansList()
 	{
 		$where = array("$this->_table.status != " => 'deleted');
-		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,2)),DATE_FORMAT($this->_table.created_at,'%d/%m/%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d/%m/%Y'),$this->_table.status,$this->_table.remarks";
+		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,2)),DATE_FORMAT($this->_table.created_at,'%d-%m-%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d-%m-%Y'),$this->_table.status,$this->_table.remarks";
 		$result = $this->db->select($select)->from($this->_table)->join($this->_staff_table, "$this->_staff_table.id=$this->_table.employee_id", 'inner')->where($where)->order_by('id','DESC')->get();
 		return $result->result_array();
 	}
@@ -22,7 +22,7 @@ class Staffloans_Model extends MY_Model
 	public function getAllStaffLoansListById($id)
 	{
 		$where = array("$this->_table.status != " => 'deleted', "$this->_table.id" => $id);
-		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,2)) as loan_amount,DATE_FORMAT($this->_table.created_at,'%d/%m/%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d/%m/%Y') as loan_last_date,$this->_table.status,$this->_table.remarks";
+		$select = "$this->_table.id,$this->_table.created_at,$this->_table.entry_date,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,2)) as loan_amount,DATE_FORMAT($this->_table.created_at,'%d-%m-%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d-%m-%Y') as loan_last_date,$this->_table.status,$this->_table.remarks";
 		$result = $this->db->select($select)->from($this->_table)->join($this->_staff_table, "$this->_staff_table.id=$this->_table.employee_id", 'inner')->where($where)->order_by('id','DESC')->get();
 		return $result->row_array();
 	}

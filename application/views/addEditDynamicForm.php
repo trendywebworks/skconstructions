@@ -10,7 +10,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                 <div class="form-group mb-4">
                     <label for="date">Date <span class="text-danger">*</span></label>
                     <div id="datepickerx" class="input-group datex" data-date-format="dd-mm-yyyy">
-                        <input class="form-control" type="date" <?php echo (isset($formCustomization) && in_array('entry_date', $formCustomization['fields']) && $formCustomization['entry_date']['readonly']==1)?'':''; ?> name="date" value="<?php echo (isset($details) && isset($details['entry_date']))?date('Y-m-d', strtotime($details['entry_date'])):date('Y-m-d'); ?>" />
+                        <input class="form-control" type="date" <?php echo (isset($formCustomization) && in_array('entry_date', $formCustomization['fields']) && $formCustomization['entry_date']['readonly']==1)?'':''; ?> name="date" value="<?php echo (isset($details) && isset($details['entry_date']))?date('d-m-Y', strtotime($details['entry_date'])):date('d-m-Y'); ?>" />
                         <span class="input-group-addon"></span>
                     </div>
                 </div>
