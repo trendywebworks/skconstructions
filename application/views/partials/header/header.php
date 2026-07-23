@@ -21,6 +21,7 @@
     <link href="<?php echo ADMIN_THEME; ?>src/assets/css/components/list-group.css" rel="stylesheet" type="text/css">
     <!-- New Added Start-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
       <!-- <link href="<?php echo ADMIN_THEME; ?>src/assets/css/components/style-calendar.css" rel="stylesheet" type="text/css"> -->
     <style>
@@ -294,6 +295,52 @@
 
             .sk-status-toggle .form-check-input:checked + .sk-status-text::before{
                 content: "Active";
+            }
+
+            .select2-container{
+                width: 100% !important;
+            }
+
+            .select2-container--default .select2-selection--single{
+                height: 47px;
+                border: 1px solid #bfc9d4;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+            }
+
+            .select2-container--default .select2-selection--single .select2-selection__rendered{
+                color: #3b3f5c;
+                line-height: 47px;
+                padding-left: 15px;
+                padding-right: 34px;
+            }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow{
+                height: 45px;
+                right: 8px;
+            }
+
+            .select2-dropdown{
+                border-color: #bfc9d4;
+                border-radius: 6px;
+                box-shadow: 0 12px 28px rgba(15, 23, 42, .12);
+            }
+
+            .select2-search--dropdown{
+                padding: 8px;
+            }
+
+            .select2-container--default .select2-search--dropdown .select2-search__field{
+                border: 1px solid #bfc9d4;
+                border-radius: 6px;
+                min-height: 38px;
+                padding: 6px 10px;
+                outline: 0;
+            }
+
+            .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable{
+                background-color: #4361ee;
             }
     </style>
 
