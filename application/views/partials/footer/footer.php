@@ -216,15 +216,15 @@ $(document).on('blur', ' #quantity, #amount, #gst', function()
         subtotal = quantity * amount;
         gst_amount = (gst/100)*subtotal;
         total = subtotal + gst_amount;
-        $('#subtotal'+sno).val(subtotal.toFixed(2));
-        $('#gst_amount'+sno).val(gst_amount.toFixed(2));
-        $('#total'+sno).val(total.toFixed(2));
+        $('#subtotal'+sno).val(Math.round(subtotal));
+        $('#gst_amount'+sno).val(Math.round(gst_amount));
+        $('#total'+sno).val(Math.round(total));
 
         var sum = 0;//$('#disabledInput').val();
         $('.alltotal').each(function(){
             sum += parseFloat(this.value);
         });
-        $('#disabledInput').val(sum.toFixed(2));
+        $('#disabledInput').val(Math.round(sum));
     }
 </script>
 
@@ -325,7 +325,7 @@ $(document).on('blur change', '#amount,#diesel_amount,#income', function()
     var dieselAmount = parseFloat($('#diesel_amount').val()) || 0;
     var income = parseFloat($('#income').val()) || 0;
     var balance = income - (amount + dieselAmount);
-    $('#balance').val(balance.toFixed(2));
+    $('#balance').val(Math.round(balance));
 });
 </script>
 
