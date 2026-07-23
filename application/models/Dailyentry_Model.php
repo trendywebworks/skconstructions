@@ -21,9 +21,8 @@ class Dailyentry_Model extends MY_Model
 	        $toDate = date('Y-m-d');
 	    }
 	    if($status == ''){
-	        $status = 'inactive';
+	        $status = 'all';
 	    }
-		$where = array("$this->_table.status" => $status);
 		$select = "$this->_table.id,$this->_table.entry_date,$this->_expense_type_table.expense_type as particular, CASE 
         WHEN $this->_table.expense_type = 'expense' 
         THEN CONCAT('₹', FORMAT($this->_table.amount, 2)) 
@@ -34,7 +33,15 @@ class Dailyentry_Model extends MY_Model
         THEN CONCAT('₹', FORMAT($this->_table.amount, 2)) 
         ELSE '' 
     END AS income,$this->_table.remarks,$this->_table.status";
-		$this->db->select($select)->from($this->_table)->join($this->_expense_type_table, "$this->_expense_type_table.id=$this->_table.expense_id", 'left')->where($where)->order_by('id','DESC');
+		$this->db->select($select)->from($this->_table)->join($this->_expense_type_table, "$this->_expense_type_table.id=$this->_table.expense_id", 'left')->order_by('id','DESC');
+		if($status == 'all')
+		{
+			$this->db->where_not_in("$this->_table.status", array('deleted'));
+		}
+		else
+		{
+			$this->db->where("$this->_table.status", $status);
+		}
 		
 		$this->db->where("$this->_table.entry_date >=", $fromDate);
 		$this->db->where("$this->_table.entry_date <=", $toDate);
