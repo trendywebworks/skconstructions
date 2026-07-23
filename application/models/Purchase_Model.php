@@ -42,4 +42,9 @@ class Purchase_Model extends MY_Model
 		return $result->result_array();
 	}
 
+	public function getTotalAmount()
+	{
+		return $this->db->select("COALESCE(SUM(total_amount), 0) as total_purchase")->from($this->_table)->where(array("$this->_table.status" => 'active'))->get()->row();
+	}
+
 }

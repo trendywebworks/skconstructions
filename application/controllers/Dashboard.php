@@ -15,6 +15,9 @@ class Dashboard extends MY_Controller {
 		$this->load->model('Ccaccount_Model');
 		$this->load->model('VehicleExpenses_Model');
 		$this->load->model('Officeexpense_Model');
+		$this->load->model('Purchase_Model');
+		$this->load->model('Marketloans_Model');
+		$this->load->model('Staffloans_Model');
 	}
 	public function index()
 	{
@@ -57,14 +60,32 @@ class Dashboard extends MY_Controller {
 
 		// echo '<pre>';print_r($daily_expense);echo '<pre>';print_r($data['daily_expense']);exit;
 		$profitLose = $this->Dailyentry_Model->getAllProfitLose();
+		$totalIncome = (isset($profitLose->profit))?(float)$profitLose->profit:0;
+		$totalExpenses = (isset($profitLose->lose))?(float)$profitLose->lose:0;
+		$netProfit = $totalIncome - $totalExpenses;
 		//CC account loan total
 		$loans = $this->Ccaccount_Model->getTotalAmount();
-		$data['cctotal'] = $loans->total_cc_loan;
+		$ccLoan = (isset($loans->total_cc_loan))?(float)$loans->total_cc_loan:0;
+		$marketLoan = (float)$this->Marketloans_Model->getTotalAmount()->total_market_loan;
+		$staffLoan = (float)$this->Staffloans_Model->getTotalAmount()->total_staff_loan;
+		$purchaseTotal = (float)$this->Purchase_Model->getTotalAmount()->total_purchase;
+		$vehicleExpense = (float)$data['allExpenses']['vehicle_expense'];
+		$officeExpense = (float)$data['allExpenses']['office_expense'];
+		$totalLoans = $ccLoan + $marketLoan + $staffLoan;
+		$summaryTotal = abs($netProfit) + $totalExpenses + $purchaseTotal + $totalLoans + $vehicleExpense + $officeExpense;
+		$data['cctotal'] = $ccLoan;
 		$data['summary'] = array(
-			'profit'	=>	$profitLose->profit,
-			'lose'		=>	$profitLose->lose,
-			'loan'		=>	$loans->total_cc_loan,
-			'plltotal'	=>	$profitLose->profit + $profitLose->lose + $loans->total_cc_loan);
+			'profit'			=>	$netProfit,
+			'income'			=>	$totalIncome,
+			'lose'				=>	$totalExpenses,
+			'purchase'			=>	$purchaseTotal,
+			'loan'				=>	$totalLoans,
+			'cc_loan'			=>	$ccLoan,
+			'market_loan'		=>	$marketLoan,
+			'staff_loan'		=>	$staffLoan,
+			'vehicle_expense'	=>	$vehicleExpense,
+			'office_expense'	=>	$officeExpense,
+			'plltotal'			=>	$summaryTotal);
 		$data['latestDailyExpenses'] = $this->Dailyentry_Model->getLatestDailyExpenses(5);
 		$data['page'] = 'dashboard';
 		$this->load->view('main', $data);
