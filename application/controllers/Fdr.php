@@ -91,11 +91,13 @@ class Fdr extends CI_Controller {
 			}
 		}
 
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-add';
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-add';
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'fdr';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function edit($id)
@@ -142,11 +144,13 @@ class Fdr extends CI_Controller {
 		}
 
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $this->_select, array('id' => $id));
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-edit/'.$id;
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-edit/'.$id;
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'fdr';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function view($id)
@@ -184,13 +188,31 @@ class Fdr extends CI_Controller {
 
 	public function formCustomization($selectid = '')
 	{
-		$data = array(
-			'fields'    => array('entry_date'),
-			'entry_date'	=>	array(
-				'name' 		=>  'Date',
-				'type'		=>	'date',
-				'readonly'	=>	1)
-		);
+			$data = array(
+				'fields'    => array('entry_date', 'name', 'description', 'amount', 'released_amount', 'remarks'),
+				'entry_date'	=>	array(
+					'name' 		=>  'Date',
+					'type'		=>	'date',
+					'readonly'	=>	1),
+				'name' => array(
+					'name'		=>	'Name',
+					'type'		=>	'text',
+					'column'	=>	'col-md-6'),
+				'description' => array(
+					'name'		=>	'Description',
+					'type'		=>	'text',
+					'column'	=>	'col-12'),
+				'amount' => array(
+					'name'		=>	'Amount',
+					'type'		=>	'text',
+					'column'	=>	'col-md-6'),
+				'released_amount' => array(
+					'name'		=>	'Released Amount',
+					'type'		=>	'text',
+					'column'	=>	'col-md-6'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12')
+			);
 		return $data;
 	}
 }

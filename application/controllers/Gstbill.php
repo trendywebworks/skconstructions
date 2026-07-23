@@ -94,11 +94,13 @@ class Gstbill extends CI_Controller {
 			}
 		}
 
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-add';
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-add';
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'gst_bill';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function edit($id)
@@ -149,11 +151,13 @@ class Gstbill extends CI_Controller {
 		}
 
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $this->_select, array('id' => $id));
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-edit/'.$id;
-		$data['formCustomization'] = $this->formCustomization($data['details']['supplier_id']);
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-edit/'.$id;
+			$data['formCustomization'] = $this->formCustomization($data['details']['supplier_id']);
+			$data['formLayout'] = 'gst_bill';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function view($id)
@@ -192,11 +196,16 @@ class Gstbill extends CI_Controller {
 	public function formCustomization($selectid = '')
 	{
 		$data = array(
-			'fields'    => array('supplier_id', 'quantity', 'amount', 'gst', 'total_amount'),
+			'fields'    => array('supplier_id', 'particular', 'quantity', 'amount', 'gst', 'total_amount', 'remarks'),
 			'supplier_id'	=>	array(
 				'name' 		=> 'Supplier',
 				'type'		=>	'select',
+				'column'	=>	'col-md-6',
 				'values'	=>	getDropdownOptions($this->_suppliers_table, 'firm_name', $selectid)),
+			'particular' => array(
+				'name'		=>	'Particular',
+				'column'	=>	'col-md-6',
+				'type'		=>	'text'),
 			'quantity' => array(
 				'name'		=>	'Quantity',
 				'column'	=>	'col-md-4',
@@ -213,7 +222,9 @@ class Gstbill extends CI_Controller {
 				'name'		=>	'Total Amount',
 				'column'	=>	'col-md-12',
 				'type'		=>	'text',
-				'readonly'	=>	'readonly')
+				'readonly'	=>	'readonly'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
 		);
 		return $data;
 	}

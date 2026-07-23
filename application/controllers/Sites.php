@@ -82,6 +82,9 @@ class Sites extends CI_Controller {
 
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'site-add';
+		$data['formCustomization'] = $this->formCustomization();
+		$data['formLayout'] = 'site';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -128,6 +131,9 @@ class Sites extends CI_Controller {
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'site-edit/'.$id;
+		$data['formCustomization'] = $this->formCustomization();
+		$data['formLayout'] = 'site';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -163,6 +169,24 @@ class Sites extends CI_Controller {
 		));
 		$this->session->set_flashdata('success', 'Site deleted successfully');
 		redirect('sites-list');
+	}
+
+	public function formCustomization()
+	{
+		$data = array(
+			'fields'    => array('site_name', 'site_address', 'remarks'),
+			'site_name' => array(
+				'name'		=>	'Site Name',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'site_address' => array(
+				'name'		=>	'Site Address',
+				'type'		=>	'text',
+				'column'	=>	'col-12'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
+		);
+		return $data;
 	}
 
 	public function expenses()

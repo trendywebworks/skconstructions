@@ -105,11 +105,13 @@ class Vehiclerunning extends CI_Controller {
 			}
 		}
 
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-add';
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-add';
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'vehicle_running';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function edit($id)
@@ -131,11 +133,13 @@ class Vehiclerunning extends CI_Controller {
 			$this->form_validation->set_rules('vehicle_no', 'Vehicle No', 'required');
 			$this->form_validation->set_rules('party_name', 'Party Name', 'required');
 			$this->form_validation->set_rules('start_km', 'Start KM', 'required');
-			$this->form_validation->set_rules('end_km', 'End KM', 'required');
-			$this->form_validation->set_rules('total_km', 'Total KM', 'required');
-			$this->form_validation->set_rules('amount', 'Amount', 'required');
-			$this->form_validation->set_rules('diesel_amount', 'Diesel Amount', 'required');
-			$this->form_validation->set_rules('balance', 'Balance', 'required');
+				$this->form_validation->set_rules('end_km', 'End KM', 'required');
+				$this->form_validation->set_rules('total_km', 'Total KM', 'required');
+				$this->form_validation->set_rules('particular', 'Particular', 'required');
+				$this->form_validation->set_rules('income', 'Income', 'required');
+				$this->form_validation->set_rules('amount', 'Amount', 'required');
+				$this->form_validation->set_rules('diesel_amount', 'Diesel Amount', 'required');
+				$this->form_validation->set_rules('balance', 'Balance', 'required');
 			if($this->_role == 1 ) 
 			{
 				$this->form_validation->set_rules('status', 'Status', 'required');
@@ -149,12 +153,14 @@ class Vehiclerunning extends CI_Controller {
 					'vehicle_id'	=>	$this->input->post('vehicle_id'),
 					'vehicle_no'	=>	$this->input->post('vehicle_no'),
 					'party_name'	=>	$this->input->post('party_name'),
-					'start_km'		=>	$this->input->post('start_km'),
-					'end_km'		=>	$this->input->post('end_km'),
-					'total_km'		=>	$this->input->post('total_km'),
-					'amount'		=>	$this->input->post('amount'),
-					'diesel_amount'	=>	$this->input->post('diesel_amount'),
-					'balance'		=>	$this->input->post('balance'),
+						'start_km'		=>	$this->input->post('start_km'),
+						'end_km'		=>	$this->input->post('end_km'),
+						'total_km'		=>	$this->input->post('total_km'),
+						'particular'	=>	$this->input->post('particular'),
+						'income'		=>	$this->input->post('income'),
+						'amount'		=>	$this->input->post('amount'),
+						'diesel_amount'	=>	$this->input->post('diesel_amount'),
+						'balance'		=>	$this->input->post('balance'),
 					'remarks'		=>	$this->input->post('remarks'),
 					'updated_at'	=>	currentDateTime(),
 					'status'		=>	$status
@@ -167,11 +173,13 @@ class Vehiclerunning extends CI_Controller {
 		}
 
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $this->_select, array('id' => $id));
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-edit/'.$id;
-		$data['formCustomization'] = $this->formCustomization($data['details']['vehicle_id']);
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-edit/'.$id;
+			$data['formCustomization'] = $this->formCustomization($data['details']['vehicle_id']);
+			$data['formLayout'] = 'vehicle_running';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function view($id)
@@ -210,7 +218,7 @@ class Vehiclerunning extends CI_Controller {
 	public function formCustomization($selectid = '', $staffid = '')
 	{
 		$data = array(
-			'fields'    => array('entry_date', 'vehicle_id', 'vehicle_no', 'start_km', 'end_km'),
+			'fields'    => array('entry_date', 'vehicle_id', 'vehicle_no', 'party_name', 'start_km', 'end_km', 'total_km', 'amount', 'diesel_amount', 'particular', 'income', 'balance', 'remarks'),
 			'entry_date'	=>	array(
 				'name' 		=>  'Date',
 				'type'		=>	'date',
@@ -225,6 +233,10 @@ class Vehiclerunning extends CI_Controller {
 				'column'	=>	'col-md-6',
 				'type'		=>	'text',
 				'readonly'	=>	'readonly'),
+			'party_name' => array(
+				'name'		=>	'Party Name',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
 			'start_km' => array(
 				'name'		=>	'Start KM',
 				'type'		=>	'text',
@@ -232,7 +244,33 @@ class Vehiclerunning extends CI_Controller {
 			'end_km' => array(
 				'name'		=>	'End KM',
 				'type'		=>	'text',
-				'column'	=>	'col-md-6')
+				'column'	=>	'col-md-6'),
+			'total_km' => array(
+				'name'		=>	'Total KM',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'amount' => array(
+				'name'		=>	'Amount',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'diesel_amount' => array(
+				'name'		=>	'Diesel Amount',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'particular' => array(
+				'name'		=>	'Particular',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'income' => array(
+				'name'		=>	'Income',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'balance' => array(
+				'name'		=>	'Balance',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
 		);
 		return $data;
 	}

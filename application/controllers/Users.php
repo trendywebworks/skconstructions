@@ -109,12 +109,14 @@ class Users extends CI_Controller {
 		);
 		$fields[] = $additional_column;
 
-		$data['fields'] = $fields;
-		$data['action'] = $this->_link_start.'-add';
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
-	}
+			$data['fields'] = $fields;
+			$data['action'] = $this->_link_start.'-add';
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'user';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
+		}
 
 	public function edit($id)
 	{
@@ -189,12 +191,14 @@ class Users extends CI_Controller {
 		);
 		$fields[] = $additional_column;
 
-		$data['fields'] = $fields;
-		$data['action'] = $this->_link_start.'-edit/'.$id;
-		$data['formCustomization'] = $this->formCustomizationEdit($data['details']['role_id']);
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
-	}
+			$data['fields'] = $fields;
+			$data['action'] = $this->_link_start.'-edit/'.$id;
+			$data['formCustomization'] = $this->formCustomizationEdit($data['details']['role_id']);
+			$data['formLayout'] = 'user';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
+		}
 
 	public function view($id)
 	{
@@ -214,12 +218,16 @@ class Users extends CI_Controller {
 
 	public function formCustomization($selectid = '')
 	{
-		$data = array(
-			'fields'    => array('first_name', 'last_name', 'email', 'phone', 'password', 'cpassword', 'city', 'state', 'profile_pic', 'role'),
-			'first_name'	=>	array(
-				'name' 		=> 'First Name',
-				'type'		=>	'text',
-				'column'	=>	'col-md-6'),
+			$data = array(
+				'fields'    => array('username', 'first_name', 'last_name', 'email', 'phone', 'password', 'cpassword', 'city', 'state', 'address', 'remarks', 'profile_pic', 'role'),
+				'username'	=>	array(
+					'name' 		=> 'Username',
+					'type'		=>	'text',
+					'column'	=>	'col-md-6'),
+				'first_name'	=>	array(
+					'name' 		=> 'First Name',
+					'type'		=>	'text',
+					'column'	=>	'col-md-6'),
 			'last_name'	=>	array(
 				'name' 		=> 'Last Name',
 				'type'		=>	'text',
@@ -244,17 +252,22 @@ class Users extends CI_Controller {
 				'name'		=>	'City',
 				'column'	=>	'col-md-6',
 				'type'		=>	'text'),
-			'state'	=>	array(
-				'name'		=>	'State',
-				'column'	=>	'col-md-6',
-				'type'		=>	'text'),
-			'profile_pic'	=>	array(
-				'exclude'	=>	1),
-			'role' => array(
-				'name'		=>	'Role',
-				'type'		=>	'select',
-				'values'	=>	getPositionDropdownOptions($selectid))
-		);
+				'state'	=>	array(
+					'name'		=>	'State',
+					'column'	=>	'col-md-6',
+					'type'		=>	'text'),
+				'address'	=>	array(
+					'column'	=>	'col-12'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12'),
+				'profile_pic'	=>	array(
+					'exclude'	=>	1),
+				'role' => array(
+					'name'		=>	'Role',
+					'type'		=>	'select',
+					'column'	=>	'col-md-6',
+					'values'	=>	getPositionDropdownOptions($selectid))
+			);
 		return $data;
 	}
 
@@ -262,10 +275,11 @@ class Users extends CI_Controller {
 	{
 		$data = array(
 			'fields'    => array('username', 'first_name', 'last_name', 'email', 'phone', 'password', 'cpassword', 'city', 'state', 'profile_pic', 'role'),
-			'username'	=>	array(
-				'name' 		=> 'Username',
-				'type'		=>	'text',
-				'readonly'	=>	'readonly'),
+				'username'	=>	array(
+					'name' 		=> 'Username',
+					'type'		=>	'text',
+					'readonly'	=>	'readonly',
+					'column'	=>	'col-md-6'),
 			'first_name'	=>	array(
 				'name' 		=> 'First Name',
 				'type'		=>	'text',
@@ -298,17 +312,22 @@ class Users extends CI_Controller {
 				'name'		=>	'City',
 				'column'	=>	'col-md-6',
 				'type'		=>	'text'),
-			'state'	=>	array(
-				'name'		=>	'State',
-				'column'	=>	'col-md-6',
-				'type'		=>	'text'),
-			'profile_pic'	=>	array(
-				'exclude'	=>	1),
-			'role' => array(
-				'name'		=>	'Role',
-				'type'		=>	'select',
-				'values'	=>	getPositionDropdownOptions($selectid))
-		);
+				'state'	=>	array(
+					'name'		=>	'State',
+					'column'	=>	'col-md-6',
+					'type'		=>	'text'),
+				'address'	=>	array(
+					'column'	=>	'col-12'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12'),
+				'profile_pic'	=>	array(
+					'exclude'	=>	1),
+				'role' => array(
+					'name'		=>	'Role',
+					'type'		=>	'select',
+					'column'	=>	'col-md-6',
+					'values'	=>	getPositionDropdownOptions($selectid))
+			);
 		return $data;
 	}
 }

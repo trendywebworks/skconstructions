@@ -98,6 +98,8 @@ class Paytopartner extends CI_Controller {
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = $this->_link_start.'-add';
 		$data['formCustomization'] = $this->formCustomization();
+		$data['formLayout'] = 'pay_partner';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -152,11 +154,13 @@ class Paytopartner extends CI_Controller {
 		}
 
 		$select = 'id,created_at,entry_date,p_id,amount,pay_for,pay_type,remarks,status';
-		$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['formCustomization'] = $this->formCustomization($data['details']['p_id'], $data['details']['pay_type']);
-		$data['action'] = $this->_link_start.'-edit/'.$id;
-		$data['page'] = 'addEditDynamicForm';
+			$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['formCustomization'] = $this->formCustomization($data['details']['p_id'], $data['details']['pay_type']);
+			$data['formLayout'] = 'pay_partner';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['action'] = $this->_link_start.'-edit/'.$id;
+			$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
 
@@ -196,15 +200,29 @@ class Paytopartner extends CI_Controller {
 	public function formCustomization($selectid = '', $type = '')
 	{
 		$data = array(
-			'fields'    => array('p_id', 'pay_type'),
+			'fields'    => array('p_id', 'expense', 'amount', 'pay_type', 'pay_for', 'remarks'),
 			'p_id'	=>	array(
 				'name' 		=> 'partner',
 				'type'		=>	'select',
+				'column'	=>	'col-md-6',
 				'values'	=>	getDropdownOptions($this->_partner_table, 'full_name', $selectid)),
+			'expense'	=>	array(
+				'exclude'	=>	1),
+			'amount'	=>	array(
+				'name' 		=> 'Amount',
+				'type'		=>	'number',
+				'column'	=>	'col-md-6'),
 			'pay_type'	=>	array(
 				'name' 		=> 'Pay Type',
 				'type'		=>	'select',
-				'values'	=>	getPayTypeDropdownOptions($type))
+				'column'	=>	'col-md-6',
+				'values'	=>	getPayTypeDropdownOptions($type)),
+			'pay_for'	=>	array(
+				'name' 		=> 'Pay For',
+				'type'		=>	'text',
+				'column'	=>	'col-12'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
 		);
 		return $data;
 	}

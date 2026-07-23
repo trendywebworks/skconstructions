@@ -181,6 +181,10 @@
                 color: #dc2626;
             }
 
+            textarea{
+                resize: none;
+            }
+
             .sk-list-filter-row .form-select,
             .sk-list-filter-row .form-control{
                 height: 48px;

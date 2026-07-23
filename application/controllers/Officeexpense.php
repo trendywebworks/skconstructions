@@ -90,11 +90,13 @@ class Officeexpense extends CI_Controller {
 			}
 		}
 
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-add';
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-add';
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'office_expense';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function edit($id)
@@ -139,11 +141,13 @@ class Officeexpense extends CI_Controller {
 		}
 
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $this->_select, array('id' => $id));
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = $this->_link_start.'-edit/'.$id;
-		$data['formCustomization'] = $this->formCustomization($data['details']['expense_type_id'], $data['details']['staff_id']);
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = $this->_link_start.'-edit/'.$id;
+			$data['formCustomization'] = $this->formCustomization($data['details']['expense_type_id'], $data['details']['staff_id']);
+			$data['formLayout'] = 'office_expense';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function view($id)
@@ -181,17 +185,25 @@ class Officeexpense extends CI_Controller {
 
 	public function formCustomization($selectid = '', $staffid = '')
 	{
-		$data = array(
-			'fields'    => array('expense_type_id', 'staff_id', 'interest', 'total_amount'),
-			'expense_type_id'	=>	array(
-				'name' 		=> 'Expense Type',
-				'type'		=>	'select',
-				'values'	=>	getDropdownOptions($this->_expense_type_table, 'expense_type', $selectid)),
-			'staff_id'	=>	array(
-				'name' 		=> 'Concern Person',
-				'type'		=>	'select',
-				'values'	=>	getDropdownOptions($this->_office_staffs_table, 'name', $staffid))
-		);
+			$data = array(
+				'fields'    => array('expense_type_id', 'staff_id', 'amount', 'remarks'),
+				'expense_type_id'	=>	array(
+					'name' 		=> 'Expense Type',
+					'type'		=>	'select',
+					'column'	=>	'col-md-6',
+					'values'	=>	getDropdownOptions($this->_expense_type_table, 'expense_type', $selectid)),
+				'staff_id'	=>	array(
+					'name' 		=> 'Concern Person',
+					'type'		=>	'select',
+					'column'	=>	'col-md-6',
+					'values'	=>	getDropdownOptions($this->_office_staffs_table, 'name', $staffid)),
+				'amount' => array(
+					'name'		=>	'Amount',
+					'type'		=>	'text',
+					'column'	=>	'col-md-6'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12')
+			);
 		return $data;
 	}
 }

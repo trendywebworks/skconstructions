@@ -105,10 +105,12 @@ class Partners extends CI_Controller {
 
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'partner-add';
-		$data['folder'] = $this->_folder;
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['folder'] = $this->_folder;
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'partner';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function edit($id)
@@ -170,10 +172,12 @@ class Partners extends CI_Controller {
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $this->_select, array('id' => $id));
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'partner-edit/'.$id;
-		$data['folder'] = $this->_folder;
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['folder'] = $this->_folder;
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'partner';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function view($id)
@@ -213,19 +217,26 @@ class Partners extends CI_Controller {
 	public function formCustomization($selectid = '')
 	{
 		$data = array(
-			'fields'    => array('phone_number', 'email_address', 'id_proof'),
-			'phone_number'	=>	array(
-				'name'		=>	'Phone Number',
-				'column'	=>	'col-md-6',
+				'fields'    => array('full_name', 'phone_number', 'email_address', 'id_proof', 'remarks'),
+				'full_name'	=>	array(
+					'name'		=>	'Full Name',
+					'column'	=>	'col-md-6',
+					'type'		=>	'text'),
+				'phone_number'	=>	array(
+					'name'		=>	'Phone Number',
+					'column'	=>	'col-md-6',
 				'type'		=>	'text'),
 			'email_address' => array(
 				'name'		=>	'Email Address',
 				'column'	=>	'col-md-6',
 				'type'		=>	'text'),
-			'id_proof' => array(
-				'name'		=>	'ID Proof',
-				'type'		=>	'file')
-		);
+				'id_proof' => array(
+					'name'		=>	'ID Proof',
+					'column'	=>	'col-12',
+					'type'		=>	'file'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12')
+			);
 		return $data;
 	}
 }
