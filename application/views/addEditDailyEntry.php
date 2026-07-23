@@ -28,6 +28,8 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                             <?php echo $sites; ?>
                         </select>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-4 mb-4">
                         <label for="exampleFormControlSelect2">Expense Type <span class="text-danger">*</span></label>
                         <select class="form-control" id="expense_type" name="expense_type" required>
@@ -70,6 +72,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                 </div>
 
                 <?php if($userdata['role_id'] == 1 ) { ?>
+                <div class="row">
                     <div class="form-group mb-4 col-4" >
                         <label for="exampleFormControlTextarea1">Status</label>
                         <select class="form-control" name="status">
@@ -77,6 +80,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                             <option value="inactive" <?php echo (!isset($de_details) || $de_details['status'] == 'inactive')?'selected':''; ?>>Inactive</option>
                         </select>
                     </div>
+                </div>
                 <?php } ?>
                 
                 <input type="submit" name="time" class="mt-4 mb-4 btn btn-primary">
