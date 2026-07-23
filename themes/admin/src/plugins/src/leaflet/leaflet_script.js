@@ -51,17 +51,21 @@ geojson.eachLayer(function (layer) {
     layer.bindPopup(layer.feature.properties.name);
 });
 
-map.setView({lat: 47.040182144806664, lng: 9.667968750000002}, 4);
+map.setView({
+    lat: 47.040182144806664,
+    lng: 9.667968750000002
+}, 4);
 
-    
+
 
 /**
  * 
  *  Interactive Choropleth Map
  */
-    
+
 var interactiveMap = L.map('interactive-map').setView([37.8, -96], 4);
 
+//var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
@@ -82,7 +86,7 @@ info.onAdd = function (interactiveMap) {
 };
 
 info.update = function (props) {
-    this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
+    this._div.innerHTML = '<h4>US Population Density</h4>' + (props ?
         '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>' : 'Hover over a state');
 };
 
@@ -92,12 +96,12 @@ info.addTo(interactiveMap);
 // get color depending on population density value
 function getColor(d) {
     return d > 1000 ? '#800026' :
-        d > 500  ? '#BD0026' :
-        d > 200  ? '#E31A1C' :
-        d > 100  ? '#FC4E2A' :
-        d > 50   ? '#FD8D3C' :
-        d > 20   ? '#FEB24C' :
-        d > 10   ? '#FED976' : '#FFEDA0';
+        d > 500 ? '#BD0026' :
+        d > 200 ? '#E31A1C' :
+        d > 100 ? '#FC4E2A' :
+        d > 50 ? '#FD8D3C' :
+        d > 20 ? '#FEB24C' :
+        d > 10 ? '#FED976' : '#FFEDA0';
 }
 
 function style(feature) {
@@ -156,7 +160,9 @@ geojson = L.geoJson(statesData, {
 interactiveMap.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
 
-var legend = L.control({position: 'bottomright'});
+var legend = L.control({
+    position: 'bottomright'
+});
 
 legend.onAdd = function (interactiveMap) {
 
