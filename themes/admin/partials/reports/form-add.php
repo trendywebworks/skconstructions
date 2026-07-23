@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 mt-md-0 mt-4">
         <div class="form widget-content-area br-8">
-            <div class="row mb-4">
+            <div class="row">
                 <div class="col-md-3" id="allsites">
                         <div class="form-group">
                             <label for="fullName">All Sites</label>
@@ -197,7 +197,7 @@
               </div>
               <div class="col-md-12 mt-1">
                     <div class="form-group text-start">
-                        <button class="btn btn-primary _effect--ripple waves-effect waves-light">Search</button>
+                        <button class="btn btn-primary btn-lg _effect--ripple waves-effect waves-light">Search</button>
                     </div>
                 </div>
         </div>
