@@ -69,8 +69,7 @@
 <div class="row layout-top-spacing">
     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
         <div class="statbox widget box box-shadow">
-            <div class="widget-content widget-content-area">
-                <?php if(isset($list) && count($list) > 0) { ?>  
+            <?php if(isset($list) && count($list) > 0) { ?>  
                     <table id="html5-extension" class="table dt-table-hover" style="width:100%">
                         <thead>
                             <tr>
@@ -139,7 +138,6 @@
                     </table>
                 <?php } else { ?>
                     <p>No results to show</p>
-                <?php } ?>
-            </div>
+            <?php } ?>
         </div>
     </div>
