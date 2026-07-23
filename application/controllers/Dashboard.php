@@ -11,7 +11,6 @@ class Dashboard extends MY_Controller {
 			redirect('');
 		}
 
-		$this->load->model('Purchase_Model');
 		$this->load->model('Dailyentry_Model');
 		$this->load->model('Ccaccount_Model');
 		$this->load->model('VehicleExpenses_Model');
@@ -70,8 +69,6 @@ class Dashboard extends MY_Controller {
 			'lose'		=>	$profitLose->lose,
 			'loan'		=>	$loans->total_cc_loan,
 			'plltotal'	=>	$profitLose->profit + $profitLose->lose + $loans->total_cc_loan);
-		$data['purchases'] = $this->Purchase_Model->getAllPurchasesList(10);
-		$data['transactions'] = $this->Dailyentry_Model->getAllDailyEntryList(6);
 		$data['latestDailyExpenses'] = $this->Dailyentry_Model->getLatestDailyExpenses(5);
 		$data['page'] = 'dashboard';
 		$this->load->view('main', $data);
