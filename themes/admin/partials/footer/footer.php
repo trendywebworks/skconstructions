@@ -103,6 +103,6 @@ $(document).on('blur change', '#amount,#diesel_amount,#income', function()
     var dieselAmount = parseFloat($('#diesel_amount').val()) || 0;
     var income = parseFloat($('#income').val()) || 0;
     var balance = income - (amount + dieselAmount);
-    $('#balance').val(balance.toFixed(2));
+    $('#balance').val(Math.round(balance));
 });
 </script>

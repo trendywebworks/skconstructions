@@ -134,7 +134,7 @@ document.getElementsByClassName('additem')[0].addEventListener('click', function
         '<input type="text" class="form-control  form-control-sm" placeholder="Price">'+
    ' </td>'+
     '<td class="text-right qty"><input type="text" class="form-control  form-control-sm" placeholder="Quantity"></td>'+
-    '<td class="text-right amount"><span class="editable-amount"><span class="currency">$</span> <span class="amount">0.00</span></td>'+
+    '<td class="text-right amount"><span class="editable-amount"><span class="currency">$</span> <span class="amount">0</span></td>'+
     '<td class="text-center tax">'+
         '<div class="n-chk">'+
             '<div class="form-check form-check-primary form-check-inline me-0 mb-0">'+
