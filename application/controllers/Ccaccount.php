@@ -93,6 +93,8 @@ class Ccaccount extends CI_Controller {
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'cc-account-add';
 		$data['formCustomization'] = $this->formCustomization();
+		$data['formLayout'] = 'cc_account';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -144,6 +146,8 @@ class Ccaccount extends CI_Controller {
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'cc-account-edit/'.$id;
 		$data['formCustomization'] = $this->formCustomization($data['details']['bank_id']);
+		$data['formLayout'] = 'cc_account';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -184,10 +188,11 @@ class Ccaccount extends CI_Controller {
 	public function formCustomization($selectid = '')
 	{
 		$data = array(
-			'fields'    => array('bank_id', 'loan_amount', 'interest', 'total_amount'),
+			'fields'    => array('bank_id', 'loan_amount', 'interest', 'total_amount', 'remarks'),
 			'bank_id'	=>	array(
 				'name' 		=> 'Bank Name',
 				'type'		=>	'select',
+				'column'	=>	'col-md-6',
 				'values'	=>	getDropdownOptions($this->_bank_table, 'bank_name', $selectid)),
 			'loan_amount' => array(
 				'name'		=>	'Loan Amount',
@@ -200,7 +205,10 @@ class Ccaccount extends CI_Controller {
 			'total_amount'	=> array(
 				'name'		=>	'Total Amount',
 				'readonly'	=>	'readonly',
-				'type'		=>	'text',)
+				'type'		=>	'text',
+				'column'	=>	'col-12'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
 		);
 		return $data;
 	}

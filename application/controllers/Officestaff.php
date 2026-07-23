@@ -109,10 +109,12 @@ class Officestaff extends CI_Controller {
 
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'office-staff-add';
-		$data['folder'] = $this->_folder;
-		$data['formCustomization'] = $this->formCustomization();
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['folder'] = $this->_folder;
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'office_staff';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function edit($id)
@@ -178,10 +180,12 @@ class Officestaff extends CI_Controller {
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $this->_select, array('id' => $id));
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'office-staff-edit/'.$id;
-		$data['folder'] = $this->_folder;
-		$data['formCustomization'] = $this->formCustomization($data['details']['position']);
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['folder'] = $this->_folder;
+			$data['formCustomization'] = $this->formCustomization($data['details']['position']);
+			$data['formLayout'] = 'office_staff';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function view($id)
@@ -221,10 +225,14 @@ class Officestaff extends CI_Controller {
 	public function formCustomization($selectid = '')
 	{
 		$data = array(
-			'fields'    => array('phone_number', 'email_address', 'position', 'joining_date', 'id_proof'),
-			'phone_number'	=>	array(
-				'name'		=>	'Phone Number',
-				'column'	=>	'col-md-6',
+				'fields'    => array('name', 'phone_number', 'email_address', 'position', 'joining_date', 'id_proof', 'remarks'),
+				'name'	=>	array(
+					'name'		=>	'Name',
+					'column'	=>	'col-md-6',
+					'type'		=>	'text'),
+				'phone_number'	=>	array(
+					'name'		=>	'Phone Number',
+					'column'	=>	'col-md-6',
 				'type'		=>	'text'),
 			'email_address' => array(
 				'name'		=>	'Email Address',
@@ -239,10 +247,13 @@ class Officestaff extends CI_Controller {
 				'name'		=>	'Joining Date',
 				'column'	=>	'col-md-6',
 				'type'		=>	'date'),
-			'id_proof' => array(
-				'name'		=>	'ID Proof- Aadhar/Pan Card',
-				'type'		=>	'file')
-		);
+				'id_proof' => array(
+					'name'		=>	'ID Proof- Aadhar/Pan Card',
+					'column'	=>	'col-12',
+					'type'		=>	'file'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12')
+			);
 		return $data;
 	}
 }

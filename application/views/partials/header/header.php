@@ -134,6 +134,11 @@
             .field-error{
               color: red;
             }
+
+            textarea{
+                resize: none;
+            }
+
             .btnn-close{
                 float: right; background-color: transparent; border: 0px;
             }

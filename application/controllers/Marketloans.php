@@ -93,6 +93,8 @@ class Marketloans extends CI_Controller {
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'market-loans-add';
 		$data['formCustomization'] = $this->formCustomization();
+		$data['formLayout'] = 'market_loans';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -142,11 +144,13 @@ class Marketloans extends CI_Controller {
 			}
 		}
 
-		$select = 'id,created_at,party_id,loan_amount,interest,total_installments,total_amount,status,remarks';
+		$select = 'id,created_at,entry_date,party_id,loan_amount,interest,total_installments,total_amount,status,remarks';
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'market-loans-edit/'.$id;
 		$data['formCustomization'] = $this->formCustomization($data['details']['party_id']);
+		$data['formLayout'] = 'market_loans';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -187,10 +191,11 @@ class Marketloans extends CI_Controller {
 	public function formCustomization($selectid = '')
 	{
 		$data = array(
-			'fields'    => array('party_id', 'loan_amount', 'interest', 'total_amount'),
+			'fields'    => array('party_id', 'loan_amount', 'interest', 'total_installments', 'total_amount', 'remarks'),
 			'party_id'	=>	array(
 				'name' 		=> 'Party Name',
 				'type'		=>	'select',
+				'column'	=>	'col-md-6',
 				'values'	=>	getDropdownOptions($this->_party_table, 'party_name', $selectid)),
 			'loan_amount' => array(
 				'name'		=>	'Loan Amount',
@@ -200,10 +205,17 @@ class Marketloans extends CI_Controller {
 				'name'		=>	'Interest Per/Month(%)',
 				'type'		=>	'text',
 				'column'	=>	'col-md-6'),
+			'total_installments' => array(
+				'name'		=>	'Total Installment',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
 			'total_amount'	=> array(
 				'name'		=>	'Total Amount',
 				'readonly'	=>	'readonly',
-				'type'		=>	'text',)
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
 		);
 		return $data;
 	}

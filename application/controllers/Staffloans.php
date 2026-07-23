@@ -94,6 +94,8 @@ class Staffloans extends CI_Controller {
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'staff-loan-add';
 		$data['formCustomization'] = $this->formCustomization();
+		$data['formLayout'] = 'staff_loan';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -146,6 +148,8 @@ class Staffloans extends CI_Controller {
 		$data['fields'] = $this->db->field_data($this->_table);
 		$data['action'] = 'staff-loan-edit/'.$id;
 		$data['formCustomization'] = $this->formCustomization($data['details']['employee_id'], $data['details']['loan_tenure']);
+		$data['formLayout'] = 'staff_loan';
+		$data['submitButtonClass'] = 'btn-lg';
 		$data['page'] = 'addEditDynamicForm';
 		$this->load->view('main', $data);
 	}
@@ -186,12 +190,12 @@ class Staffloans extends CI_Controller {
 	public function formCustomization($selectid = '', $tenureid='')
 	{
 		$data = array(
-			'fields'    => array('employee_id', 'loan_amount', 'loan_tenure', 'loan_last_date'),
-			'employee_id'	=>	array(
-				'name'		=>	'Employee Person',
-				'column'	=>	'col-md-12',
-				'type'		=>	'select',
-				'values'	=>	getDropdownOptions($this->_employee_table, 'name', $selectid)),
+				'fields'    => array('employee_id', 'loan_amount', 'loan_tenure', 'loan_last_date', 'remarks'),
+				'employee_id'	=>	array(
+					'name'		=>	'Employee',
+					'column'	=>	'col-md-6',
+					'type'		=>	'select',
+					'values'	=>	getDropdownOptions($this->_employee_table, 'name', $selectid)),
 			'loan_amount' => array(
 				'name'		=>	'Loan Amount',
 				'column'	=>	'col-md-6',
@@ -201,11 +205,14 @@ class Staffloans extends CI_Controller {
 				'column'	=>	'col-md-6',
 				'type'		=>	'select',
 				'values'	=>	getLoanTenureOptions($tenureid)),
-			'loan_last_date' => array(
-				'name'		=>	'Loan Last Date',
-				'type'		=>	'text',
-				'readonly'	=>	'readonly')
-		);
+				'loan_last_date' => array(
+					'name'		=>	'Loan Last Date',
+					'type'		=>	'text',
+					'column'	=>	'col-12',
+					'readonly'	=>	'readonly'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12')
+			);
 		return $data;
 	}
 }

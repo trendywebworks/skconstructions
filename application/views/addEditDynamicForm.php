@@ -1,23 +1,298 @@
 <?php
 $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'));
+$isPayPartnerForm = (isset($formLayout) && $formLayout == 'pay_partner');
+$isMarketLoansForm = (isset($formLayout) && $formLayout == 'market_loans');
+$isVehicleRunningForm = (isset($formLayout) && $formLayout == 'vehicle_running');
+$isGstBillForm = (isset($formLayout) && $formLayout == 'gst_bill');
+$isFdrForm = (isset($formLayout) && $formLayout == 'fdr');
+$isCcAccountForm = (isset($formLayout) && $formLayout == 'cc_account');
+$isOfficeExpenseForm = (isset($formLayout) && $formLayout == 'office_expense');
+$isStaffLoanForm = (isset($formLayout) && $formLayout == 'staff_loan');
+$isSiteForm = (isset($formLayout) && $formLayout == 'site');
+$isPartnerForm = (isset($formLayout) && $formLayout == 'partner');
+$isOfficeStaffForm = (isset($formLayout) && $formLayout == 'office_staff');
+$isLoanPartyForm = (isset($formLayout) && $formLayout == 'loan_party');
+$isExpenseTypeForm = (isset($formLayout) && $formLayout == 'expense_type');
+$isSupplierForm = (isset($formLayout) && $formLayout == 'supplier');
+$isBankForm = (isset($formLayout) && $formLayout == 'bank');
+$isUserForm = (isset($formLayout) && $formLayout == 'user');
+$isWideDynamicForm = ($isPayPartnerForm || $isMarketLoansForm || $isVehicleRunningForm || $isGstBillForm || $isFdrForm || $isCcAccountForm || $isOfficeExpenseForm || $isStaffLoanForm || $isSiteForm || $isPartnerForm || $isOfficeStaffForm || $isLoanPartyForm || $isExpenseTypeForm || $isSupplierForm || $isBankForm || $isUserForm);
+$dateColumn = ($isGstBillForm || $isBankForm)?'col-12':($isWideDynamicForm?'col-md-6':'');
 ?>
 
 <div class="row">                
-    <div class="col-xl-5 col-lg-5 col-sm-5 layout-spacing">
+    <div class="<?php echo $isWideDynamicForm?'col-xl-8 col-lg-9 col-sm-12':'col-xl-5 col-lg-5 col-sm-5'; ?> layout-spacing">
         <div class="statbox widget box box-shadow">
 
             <form method="post" action="<?php echo base_url($action); ?>" enctype="multipart/form-data">
-                <div class="form-group mb-4">
+                <?php if($isWideDynamicForm) { ?><div class="row"><?php } ?>
+                <div class="form-group mb-4 <?php echo $dateColumn; ?>">
                     <label for="date">Date <span class="text-danger">*</span></label>
                     <div id="datepickerx" class="input-group datex" data-date-format="dd-mm-yyyy">
                         <input class="form-control" type="date" <?php echo (isset($formCustomization) && in_array('entry_date', $formCustomization['fields']) && $formCustomization['entry_date']['readonly']==1)?'':''; ?> name="date" value="<?php echo (isset($details) && isset($details['entry_date']))?date('d-m-Y', strtotime($details['entry_date'])):date('d-m-Y'); ?>" />
                         <span class="input-group-addon"></span>
                     </div>
                 </div>
-                <div class="row">
+                <?php if(!$isWideDynamicForm) { ?><div class="row"><?php } ?>
                 <?php //echo '<pre>';print_r($fields);
                 if(isset($fields))
                 {
+                    if($isMarketLoansForm)
+                    {
+                        $fieldOrder = array_flip(array('party_id', 'loan_amount', 'interest', 'total_installments', 'total_amount', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isGstBillForm)
+                    {
+                        $fieldOrder = array_flip(array('supplier_id', 'particular', 'quantity', 'amount', 'gst', 'total_amount', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isFdrForm)
+                    {
+                        $fieldOrder = array_flip(array('name', 'description', 'amount', 'released_amount', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isCcAccountForm)
+                    {
+                        $fieldOrder = array_flip(array('bank_id', 'loan_amount', 'interest', 'total_amount', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isOfficeExpenseForm)
+                    {
+                        $fieldOrder = array_flip(array('expense_type_id', 'staff_id', 'amount', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isStaffLoanForm)
+                    {
+                        $fieldOrder = array_flip(array('employee_id', 'loan_amount', 'loan_tenure', 'loan_last_date', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isSiteForm)
+                    {
+                        $fieldOrder = array_flip(array('site_name', 'site_address', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isPartnerForm)
+                    {
+                        $fieldOrder = array_flip(array('full_name', 'phone_number', 'email_address', 'id_proof', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isOfficeStaffForm)
+                    {
+                        $fieldOrder = array_flip(array('name', 'phone_number', 'email_address', 'position', 'joining_date', 'id_proof', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isLoanPartyForm)
+                    {
+                        $fieldOrder = array_flip(array('party_name', 'phone', 'address', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+	                    if($isExpenseTypeForm)
+	                    {
+	                        $fieldOrder = array_flip(array('expense_type', 'expense_title', 'remarks'));
+	                        usort($fields, function($a, $b) use ($fieldOrder) {
+	                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+	                        });
+	                    }
+
+	                    if($isSupplierForm)
+	                    {
+	                        $fieldOrder = array_flip(array('firm_name', 'contact_person', 'phone_number', 'email_address', 'address', 'remarks'));
+	                        usort($fields, function($a, $b) use ($fieldOrder) {
+	                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+	                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+	                            if($aOrder == $bOrder)
+	                            {
+	                                return 0;
+	                            }
+
+	                            return ($aOrder < $bOrder)?-1:1;
+	                        });
+	                    }
+
+	                    if($isBankForm)
+	                    {
+	                        $fieldOrder = array_flip(array('bank_name', 'bank_branch', 'remarks'));
+	                        usort($fields, function($a, $b) use ($fieldOrder) {
+	                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+	                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+	                            if($aOrder == $bOrder)
+	                            {
+	                                return 0;
+	                            }
+
+	                            return ($aOrder < $bOrder)?-1:1;
+	                        });
+	                    }
+
+	                    if($isUserForm)
+	                    {
+	                        $fieldOrder = array_flip(array('username', 'first_name', 'last_name', 'email', 'phone', 'password', 'cpassword', 'city', 'state', 'address', 'remarks', 'role'));
+	                        usort($fields, function($a, $b) use ($fieldOrder) {
+	                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+	                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+	                            if($aOrder == $bOrder)
+	                            {
+	                                return 0;
+	                            }
+
+	                            return ($aOrder < $bOrder)?-1:1;
+	                        });
+	                    }
+
+			                    if($isVehicleRunningForm)
+                    {
+                        $fieldOrder = array_flip(array('vehicle_id', 'vehicle_no', 'party_name', 'start_km', 'end_km', 'total_km', 'amount', 'diesel_amount', 'particular', 'income', 'balance', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
+                    if($isPayPartnerForm)
+                    {
+                        $fieldOrder = array_flip(array('p_id', 'amount', 'pay_type', 'pay_for', 'remarks'));
+                        usort($fields, function($a, $b) use ($fieldOrder) {
+                            $aOrder = isset($fieldOrder[$a->name])?$fieldOrder[$a->name]:99;
+                            $bOrder = isset($fieldOrder[$b->name])?$fieldOrder[$b->name]:99;
+
+                            if($aOrder == $bOrder)
+                            {
+                                return 0;
+                            }
+
+                            return ($aOrder < $bOrder)?-1:1;
+                        });
+                    }
+
                     foreach($fields as $field)
                     {
                         if(in_array($field->name, array('id', 'created_at', 'updated_at', 'status', 'company_id', 'remember_token', 'last_logged_in', 'last_ip', 'entry_date')))
@@ -146,7 +421,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                     </div>
                 <?php } ?>
 
-                <input type="submit" name="time" class="mt-4 mb-4 btn btn-primary">
+                <input type="submit" name="time" class="mt-4 mb-4 btn btn-primary <?php echo isset($submitButtonClass)?$submitButtonClass:''; ?>">
             </form>
 
         </div>

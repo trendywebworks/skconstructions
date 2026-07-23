@@ -80,11 +80,14 @@ class Banks extends CI_Controller {
 			}
 		}
 
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = 'bank-add';
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
-	}
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = 'bank-add';
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'bank';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
+		}
 
 	public function edit($id)
 	{
@@ -132,12 +135,15 @@ class Banks extends CI_Controller {
 		}
 
 		$select = 'id,created_at,entry_date,bank_name,bank_branch,status,remarks';
-		$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = 'bank-edit/'.$id;
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
-	}
+			$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = 'bank-edit/'.$id;
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'bank';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
+		}
 
 	public function view($id)
 	{
@@ -170,5 +176,22 @@ class Banks extends CI_Controller {
 		));
 		$this->session->set_flashdata('success', 'Bank deleted successfully');
 		redirect('banks-list');
+	}
+
+	private function formCustomization()
+	{
+		return array(
+			'fields'	=>	array('bank_name', 'bank_branch', 'remarks'),
+			'bank_name'	=>	array(
+				'name'		=>	'Bank Name',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'bank_branch'	=>	array(
+				'name'		=>	'Branch Name',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
+		);
 	}
 }

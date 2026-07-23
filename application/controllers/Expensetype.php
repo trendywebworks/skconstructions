@@ -81,12 +81,14 @@ class Expensetype extends CI_Controller {
 			}
 		}
 
-		$data['fields'] = $this->getFields();
-		//$this->db->field_data($this->_table);
-		$data['formCustomization'] = $this->formCustomization();
-		$data['action'] = 'expense-type-add';
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->getFields();
+			//$this->db->field_data($this->_table);
+			$data['formCustomization'] = $this->formCustomization();
+			$data['action'] = 'expense-type-add';
+			$data['formLayout'] = 'expense_type';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function edit($id)
@@ -130,12 +132,14 @@ class Expensetype extends CI_Controller {
 
 		$select = 'id,created_at,entry_date,expense_type,expense,status,remarks';
 		$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
-		$data['fields'] = $this->getFields();//$this->db->field_data($this->_table);
-		$selected = ($data['details']['expense']=='expense')?1:2;
-		$data['formCustomization'] = $this->formCustomization($selected);
-		$data['action'] = 'expense-type-edit/'.$id;
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
+			$data['fields'] = $this->getFields();//$this->db->field_data($this->_table);
+			$selected = ($data['details']['expense']=='expense')?1:2;
+			$data['formCustomization'] = $this->formCustomization($selected);
+			$data['action'] = 'expense-type-edit/'.$id;
+			$data['formLayout'] = 'expense_type';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
 	}
 
 	public function view($id)
@@ -238,13 +242,20 @@ class Expensetype extends CI_Controller {
 	public function formCustomization($selectid = '')
 	{
 		$data = array(
-			'fields'    => array('expense_type'),
-			'expense_type'	=>	array(
-				'name' 		=> 'Expense Type',
-				'type'		=>	'select',
-				'values'	=>	getDropdownOptions('expense_main_types', 'title', $selectid)
-				)
-		);
+				'fields'    => array('expense_type', 'expense_title', 'remarks'),
+				'expense_type'	=>	array(
+					'name' 		=> 'Expense Type',
+					'type'		=>	'select',
+					'column'	=>	'col-md-6',
+					'values'	=>	getDropdownOptions('expense_main_types', 'title', $selectid)
+					),
+				'expense_title' => array(
+					'name'		=>	'Expense Title',
+					'type'		=>	'text',
+					'column'	=>	'col-12'),
+				'remarks'	=>	array(
+					'column'	=>	'col-12')
+			);
 		return $data;
 	}
 

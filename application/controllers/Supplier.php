@@ -85,11 +85,14 @@ class Supplier extends CI_Controller {
 			}
 		}
 
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = 'supplier-add';
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
-	}
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = 'supplier-add';
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'supplier';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
+		}
 
 	public function edit($id)
 	{
@@ -136,12 +139,15 @@ class Supplier extends CI_Controller {
 		}
 
 		$select = 'id,created_at,entry_date,firm_name,contact_person,address,phone_number,email_address,status,remarks';
-		$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
-		$data['fields'] = $this->db->field_data($this->_table);
-		$data['action'] = 'supplier-edit/'.$id;
-		$data['page'] = 'addEditDynamicForm';
-		$this->load->view('main', $data);
-	}
+			$data['details'] = $this->common_model->getWhereRow($this->_table, $select, array('id' => $id));
+			$data['fields'] = $this->db->field_data($this->_table);
+			$data['action'] = 'supplier-edit/'.$id;
+			$data['formCustomization'] = $this->formCustomization();
+			$data['formLayout'] = 'supplier';
+			$data['submitButtonClass'] = 'btn-lg';
+			$data['page'] = 'addEditDynamicForm';
+			$this->load->view('main', $data);
+		}
 
 	public function view($id)
 	{
@@ -174,5 +180,32 @@ class Supplier extends CI_Controller {
 		));
 		$this->session->set_flashdata('success', 'Supplier deleted successfully');
 		redirect('suppliers-list');
+	}
+
+	private function formCustomization()
+	{
+		return array(
+			'fields'	=>	array('firm_name', 'contact_person', 'phone_number', 'email_address', 'address', 'remarks'),
+			'firm_name'	=>	array(
+				'name'		=>	'Firm Name',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'contact_person'	=>	array(
+				'name'		=>	'Contact Person',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'phone_number'	=>	array(
+				'name'		=>	'Phone Number',
+				'type'		=>	'text',
+				'column'	=>	'col-md-6'),
+			'email_address'	=>	array(
+				'name'		=>	'Email',
+				'type'		=>	'email',
+				'column'	=>	'col-12'),
+			'address'	=>	array(
+				'column'	=>	'col-12'),
+			'remarks'	=>	array(
+				'column'	=>	'col-12')
+		);
 	}
 }
