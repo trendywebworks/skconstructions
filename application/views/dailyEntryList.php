@@ -31,7 +31,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                     </div>
                     <div class="col-md-auto">
                         <div class="form-group">
-                            <input class="btn btn-primary sk-filter-submit _effect--ripple waves-effect waves-light" type="submit" name="filter" value="Filter">
+                            <input class="btn btn-primary _effect--ripple waves-effect waves-light" type="submit" name="filter" value="Filter">
                         </div>
                     </div>
                 </div>
