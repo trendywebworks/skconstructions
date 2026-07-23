@@ -253,6 +253,48 @@
                 font-size: 13px;
                 font-weight: 600;
             }
+
+            .sk-status-toggle{
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                min-height: 48px;
+                padding-left: 0;
+                margin-bottom: 0;
+            }
+
+            .sk-status-toggle .form-check-input{
+                float: none;
+                width: 48px;
+                height: 26px;
+                margin-left: 0;
+                margin-top: 0;
+                cursor: pointer;
+                border-color: #d3d8e4;
+                background-color: #e2e8f0;
+            }
+
+            .sk-status-toggle .form-check-input:checked{
+                background-color: #00ab55;
+                border-color: #00ab55;
+            }
+
+            .sk-status-toggle .form-check-input:focus{
+                box-shadow: 0 0 0 3px rgba(0, 171, 85, .16);
+            }
+
+            .sk-status-toggle .sk-status-text{
+                font-weight: 600;
+                color: #3b3f5c;
+            }
+
+            .sk-status-toggle .sk-status-text::before{
+                content: "Inactive";
+            }
+
+            .sk-status-toggle .form-check-input:checked + .sk-status-text::before{
+                content: "Active";
+            }
     </style>
 
     <!-- New Added Close -->

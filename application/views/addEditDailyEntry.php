@@ -73,14 +73,15 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
 
                 <?php if($userdata['role_id'] == 1 ) { ?>
                 <div class="row">
-                    <div class="form-group mb-4 col-4" >
-                        <label for="exampleFormControlTextarea1">Status</label>
-                        <select class="form-control" name="status">
-                            <option value="active" <?php echo (isset($de_details) && $de_details['status'] == 'active')?'selected':''; ?>>Active</option>
-                            <option value="inactive" <?php echo (!isset($de_details) || $de_details['status'] == 'inactive')?'selected':''; ?>>Inactive</option>
-                        </select>
-                    </div>
-                </div>
+	                    <div class="form-group mb-4 col-4" >
+	                        <label for="exampleFormControlTextarea1">Status</label>
+	                        <div class="form-check form-switch sk-status-toggle">
+	                            <input type="hidden" name="status" value="inactive">
+	                            <input class="form-check-input" type="checkbox" role="switch" id="status" name="status" value="active" <?php echo (isset($de_details) && $de_details['status'] == 'active')?'checked':''; ?>>
+	                            <span class="sk-status-text"></span>
+	                        </div>
+	                    </div>
+	                </div>
                 <?php } ?>
                 
                 <input type="submit" name="time" class="mt-4 mb-4 btn btn-primary">

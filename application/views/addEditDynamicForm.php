@@ -137,11 +137,11 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                 <?php if($userdata['role_id'] == 1 ) { ?>
                     <div class="form-group mb-4 col-12" >
                         <label for="status">Status <span class="text-danger">*</span></label>
-                        <select class="form-control" name="status">
-                            <!-- <option value="" <?php echo (!isset($details))?'selected':'';?>>Select</option> -->
-                            <option value="active" <?php echo (isset($details) && $details['status'] == 'active')?'selected':''; ?>>Active</option>
-                            <option value="inactive" <?php echo (isset($details) && $details['status'] == 'inactive')?'selected':''; ?>>Inactive</option>
-                        </select>
+                        <div class="form-check form-switch sk-status-toggle">
+                            <input type="hidden" name="status" value="inactive">
+                            <input class="form-check-input" type="checkbox" role="switch" id="status" name="status" value="active" <?php echo (!isset($details) || $details['status'] == 'active')?'checked':''; ?>>
+                            <span class="sk-status-text"></span>
+                        </div>
                         <?php echo form_error('status','<p class="field-error">','</p>'); ?>
                     </div>
                 <?php } ?>
