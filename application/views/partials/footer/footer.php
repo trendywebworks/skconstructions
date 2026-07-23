@@ -37,41 +37,40 @@
 <script src="<?php echo ADMIN_THEME; ?>src/plugins/src/table/datatable/custom_miscellaneous.js"></script>
 <!-- END DATATABLES SCRIPTS --> 
 
-    <script>
-        $(function () {
-            $("#datepicker").datepicker({ 
-                autoclose: true, 
-                todayHighlight: true,
-                todayBtn : "linked",
-            }).datepicker('update', new Date());
-        });
-
-        $(function () {
-            $("#datepicker2").datepicker({ 
-                autoclose: true, 
-                todayHighlight: true,
-                todayBtn : "linked",
-            }).datepicker('update', new Date());
-        });
-        $(function () {
-            $("#datepicker3").datepicker({ 
-                autoclose: true, 
-                todayHighlight: true,
-                todayBtn : "linked",
-            }).datepicker('update', new Date());
-        });
-        $(function () {
-            $("#datepicker4").datepicker({ 
-                autoclose: true, 
-                todayHighlight: true,
-                todayBtn : "linked",
-            }).datepicker('update', new Date());
-        });
-    </script>
-
 <!-- DATEPICKER SCRIPTS -->
 <script src=
 "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
+    </script>
+
+    <script>
+        $(function () {
+            var datepickerOptions = {
+                autoclose: true,
+                clearBtn: true,
+                container: 'body',
+                format: 'yyyy-mm-dd',
+                orientation: 'bottom auto',
+                todayBtn: 'linked',
+                todayHighlight: true
+            };
+
+            var $dateFields = $('input[type="date"], .input-group.date input, .input-group.datex input, .input-groupx.datex input, .dayDateFormat')
+                .not('[data-skip-datepicker="true"]');
+
+            $dateFields.each(function () {
+                var $field = $(this);
+
+                if ($field.attr('type') === 'date') {
+                    $field.attr('type', 'text');
+                }
+
+                $field
+                    .addClass('sk-datepicker-field')
+                    .attr('autocomplete', 'off')
+                    .attr('placeholder', 'yyyy-mm-dd')
+                    .datepicker(datepickerOptions);
+            });
+        });
     </script>
 
 
