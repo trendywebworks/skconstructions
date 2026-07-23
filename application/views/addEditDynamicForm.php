@@ -21,7 +21,7 @@ $dateColumn = ($isGstBillForm || $isBankForm)?'col-12':($isWideDynamicForm?'col-
 ?>
 
 <div class="row">                
-    <div class="<?php echo $isWideDynamicForm?'col-xl-8 col-lg-9 col-sm-12':'col-xl-5 col-lg-5 col-sm-5'; ?> layout-spacing">
+    <div class="<?php echo $isWideDynamicForm?'col-xl-6 col-lg-6 col-sm-12':'col-xl-5 col-lg-5 col-sm-5'; ?> layout-spacing">
         <div class="statbox widget box box-shadow">
 
             <form method="post" action="<?php echo base_url($action); ?>" enctype="multipart/form-data">
