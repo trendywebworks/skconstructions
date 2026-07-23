@@ -12,6 +12,7 @@ if(isset($fields))
 
         $readonly = '';
         $name = '';
+        $custom = array();
 
         $col = '';
         if(isset($formCustomization) && in_array($field->name, $formCustomization['fields']))
@@ -26,6 +27,17 @@ if(isset($fields))
             $setValue = $custom['value'];
         }
         $fieldValue =  (isset($details) && isset($details[$field->name]))?$details[$field->name]:$setValue; 
+        if($field->type == 'date' || (isset($custom['type']) && $custom['type'] == 'date'))
+        {
+            if($fieldValue != '')
+            {
+                $fieldValue = date('d-m-Y', strtotime($fieldValue));
+            }
+            else if(!isset($details))
+            {
+                $fieldValue = date('d-m-Y');
+            }
+        }
 
         if(isset($custom['exclude']) && $custom['exclude']==1)
         {}
