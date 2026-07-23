@@ -19,11 +19,7 @@ class Auth extends CI_Controller
   	{
 	  	if ($this->_is_logged_in() == TRUE)
 	  	{
-	  		$today = date('Y-m-d');
-	  		$data['students'] = $this->db->where('re_status',1)->order_by('re_id','desc')->get('register')->result();
-	  		$data['events'] = $this->db->where('ev_status',1)->where('ev_date >= ',$today)->order_by('ev_date','asc')->limit(5)->get('events')->result(); 
-
-	  		$this->load->view('auth/admin_home',$data);
+	  		redirect('dashboard');
 	  	}
 	  	else
 	  	{
@@ -57,10 +53,8 @@ class Auth extends CI_Controller
 	  			redirect("dashboard");
 	  		}
 	  		else { 
-	  			$data = array();
-	  			$data['login_error'] = 'Incorrect Username/Password or check email to verify';
-	  			$data['email'] = $this->input->post('uname'); 
-	  			$this->load->view('auth/login', $data);
+	  			$this->session->set_flashdata('error', 'Incorrect email or password.');
+	  			redirect('');
 	  		}
 	  	} 
 	  	else 
@@ -210,7 +204,7 @@ class Auth extends CI_Controller
   private function _is_logged_in()
   {
   	$session_data = $this->session->all_userdata();
-  	return (isset($session_data['is_admin']) && $session_data['is_admin'] > 0 && $session_data['logged_in'] == TRUE);
+  	return (isset($session_data['user_id']) && $session_data['user_id'] > 0 && isset($session_data['logged_in']) && $session_data['logged_in'] == TRUE);
   }
 
 }
