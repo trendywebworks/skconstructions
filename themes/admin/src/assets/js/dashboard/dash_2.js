@@ -204,7 +204,7 @@ window.addEventListener("load", function(){
         }]
         },
         subtitle: {
-          text: '$10,840',
+          text: '',
           align: 'left',
           margin: 0,
           offsetX: 100,
@@ -216,7 +216,7 @@ window.addEventListener("load", function(){
           }
         },
         title: {
-          text: 'Total Profit',
+          text: '',
           align: 'left',
           margin: 0,
           offsetX: -10,
@@ -234,11 +234,11 @@ window.addEventListener("load", function(){
             lineCap: 'square'
         },
         series: [{
-            name: 'Expenses',
-            data: [16800, 16800, 15500, 14800, 15500, 17000, 21000, 16000, 15000, 17000, 14000, 17000]
+            name: 'Total Expense',
+            data: (document.getElementById("monthlyTotalExpenses").value).split(',')
         }, {
-            name: 'Income',
-            data: [16500, 17500, 16200, 17300, 16000, 21500, 16000, 17000, 16000, 19000, 18000, 19000]
+            name: 'Total Income',
+            data: (document.getElementById("monthlyTotalIncome").value).split(',')
         }],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         xaxis: {
@@ -680,11 +680,11 @@ window.addEventListener("load", function(){
             lineCap: 'square'
         },
         series: [{
-            name: 'Expenses',
-            data: (document.getElementById("allLoses").value).split(',')
+            name: 'Total Expense',
+            data: (document.getElementById("monthlyTotalExpenses").value).split(',')
         }, {
-            name: 'Income',
-            data: (document.getElementById("allProfits").value).split(',')
+            name: 'Total Income',
+            data: (document.getElementById("monthlyTotalIncome").value).split(',')
         }],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         xaxis: {
