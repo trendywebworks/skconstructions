@@ -45,6 +45,7 @@ class Officeexpense extends CI_Controller {
 			'title'	  	=> 'Total',
 			'sum_cols'	=> [3],
 			'empty' 	=> 2);
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -160,6 +161,22 @@ class Officeexpense extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete office expenses.');
+			redirect('office-expense-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Office Expense deleted successfully');
+		redirect('office-expense-list');
 	}
 
 	public function formCustomization($selectid = '', $staffid = '')

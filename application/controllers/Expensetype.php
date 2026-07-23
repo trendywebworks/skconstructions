@@ -37,6 +37,7 @@ class Expensetype extends CI_Controller {
 		$select = 'id,created_at,entry_date,expense_type,expense,table_name,status,remarks';
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $select, array('status != ' => 'deleted'));
 		$data['theads'] = ['date', 'expense_title', 'expense_type', 'status', 'remarks', 'action'];
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -216,6 +217,22 @@ class Expensetype extends CI_Controller {
 		        'primary_key' => 0
 		    )
 		);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete expense types.');
+			redirect('expense-type-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Expense Type deleted successfully');
+		redirect('expense-type-list');
 	}
 	
 	public function formCustomization($selectid = '')

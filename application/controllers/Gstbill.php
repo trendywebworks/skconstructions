@@ -43,6 +43,7 @@ class Gstbill extends CI_Controller {
 			'title'	  	=> 'Total',
 			'sum_cols'	=> [4,5,8],
 			'empty' 	=> 6);
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -170,6 +171,22 @@ class Gstbill extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete GST bills.');
+			redirect('gst-bill-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'GST Bill deleted successfully');
+		redirect('gst-bill-list');
 	}
 
 	public function formCustomization($selectid = '')

@@ -44,6 +44,7 @@ class Purchase extends CI_Controller {
 			'title'	  	=> 'Total',
 			'sum_cols'	=> [3,4,5],
 			'empty' 	=> 5);
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -252,6 +253,24 @@ class Purchase extends CI_Controller {
 
 		$data['page'] = 'viewPurchase';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete purchases.');
+			redirect('purchase-list');
+		}
+
+		$upArray = array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		);
+		$this->common_model->updateWhere($this->_table, array('id' => $id), $upArray);
+		$this->common_model->updateWhere($this->_purchase_details_table, array('purchase_id' => $id), $upArray);
+		$this->session->set_flashdata('success', 'Purchase deleted successfully');
+		redirect('purchase-list');
 	}
 
 	public function formCustomization($selectid = '')
