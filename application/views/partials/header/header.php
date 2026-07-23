@@ -186,6 +186,73 @@
                 background: #fff1f2;
                 color: #dc2626;
             }
+
+            .sk-list-filter-row .form-select,
+            .sk-list-filter-row .form-control{
+                height: 48px;
+                margin-bottom: 0 !important;
+            }
+
+            .sk-filter-submit{
+                height: 48px;
+                min-width: 92px;
+                padding: 0 22px;
+                border-radius: 6px;
+                font-size: 13px;
+                font-weight: 600;
+                box-shadow: 0 8px 18px rgba(67, 97, 238, .18) !important;
+            }
+
+            .dt--top-section .row{
+                align-items: center;
+            }
+
+            .dt--top-section .dt-buttons{
+                display: flex;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .dt-buttons .dt-button.sk-dt-export-btn,
+            .dt-buttons .dt-button.btn-sm{
+                margin: 0 !important;
+                padding: 6px 12px !important;
+                min-width: auto;
+                border-radius: 6px !important;
+                font-size: 12px !important;
+                line-height: 1.2 !important;
+                box-shadow: none !important;
+            }
+
+            .dataTables_filter{
+                width: 100%;
+                text-align: right;
+            }
+
+            .dataTables_filter label{
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            .dataTables_filter input{
+                width: min(100%, 360px) !important;
+                height: 42px;
+                margin-left: 10px !important;
+            }
+
+            .sk-bulk-actions{
+                display: inline-flex;
+                overflow: hidden;
+                border-radius: 6px;
+                box-shadow: 0 6px 16px rgba(31, 45, 61, .08);
+            }
+
+            .sk-bulk-actions .btn{
+                padding: 8px 16px;
+                font-size: 13px;
+                font-weight: 600;
+            }
     </style>
 
     <!-- New Added Close -->

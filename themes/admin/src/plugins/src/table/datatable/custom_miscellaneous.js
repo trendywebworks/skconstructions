@@ -198,22 +198,22 @@ $(document).ready(function() {
     "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
         buttons: {
             buttons: [
-                { extend: 'copy', className: 'btn', exportOptions: {
+                { extend: 'copy', className: 'btn btn-sm sk-dt-export-btn', exportOptions: {
                         columns: ':not(:last)'
                     },
                     footer: true 
                 },
-                { extend: 'csv', className: 'btn',  exportOptions: {
+                { extend: 'csv', className: 'btn btn-sm sk-dt-export-btn',  exportOptions: {
                         columns: ':not(:last)'
                     },
                     footer: true 
                 },
-                { extend: 'excel', className: 'btn', exportOptions: {
+                { extend: 'print', className: 'btn btn-sm sk-dt-export-btn', exportOptions: {
                         columns: ':not(:last)'
                     },
                     footer: true 
                 },
-                { extend: 'print', className: 'btn', exportOptions: {
+                { extend: 'excel', className: 'btn btn-sm sk-dt-export-btn', exportOptions: {
                         columns: ':not(:last)'
                     },
                     footer: true 
@@ -371,7 +371,6 @@ $(document).ready(function() {
 
 
 } );
-
 
 
 
