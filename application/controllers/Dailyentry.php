@@ -89,9 +89,19 @@ class Dailyentry extends CI_Controller {
 	    }
 		else
 		{
-		    $data['fromDate'] = $data['toDate'] = date('d-m-Y');
-		    $queryFromDate = $queryToDate = date('Y-m-d');
-		    $data['status'] = 'inactive';
+		    $queryFromDate = $this->db->select_min('entry_date', 'from_date')
+		    	->where_not_in('status', array('deleted'))
+		    	->get($this->_table)
+		    	->row_array();
+		    $queryToDate = $this->db->select_max('entry_date', 'to_date')
+		    	->where_not_in('status', array('deleted'))
+		    	->get($this->_table)
+		    	->row_array();
+		    $queryFromDate = (!empty($queryFromDate['from_date']))?$queryFromDate['from_date']:date('Y-m-d');
+		    $queryToDate = (!empty($queryToDate['to_date']))?$queryToDate['to_date']:date('Y-m-d');
+		    $data['fromDate'] = date('d-m-Y', strtotime($queryFromDate));
+		    $data['toDate'] = date('d-m-Y', strtotime($queryToDate));
+		    $data['status'] = 'all';
 		}
 		$data['list'] = $this->Dailyentry_Model->getAllDailyEntryList('', $queryFromDate, $queryToDate, $data['status']);
 // 		echo '<pre>';print_r($data['list']);exit;

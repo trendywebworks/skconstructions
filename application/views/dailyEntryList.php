@@ -10,6 +10,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-select mb-3" id="status" name="status">
+                                <option value="all" <?php echo isset($status) && $status=='all'?'selected':''; ?>>All</option>
                                 <option value="active" <?php echo isset($status) && $status=='active'?'selected':''; ?>>Approved</option>
                                 <option value="inactive" <?php echo isset($status) && $status=='inactive'?'selected':''; ?>>Pending</option>
                                 <option value="delete_pending" <?php echo isset($status) && $status=='delete_pending'?'selected':''; ?>>Delete Pending</option>
@@ -68,7 +69,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
         
         <div class="statbox widget box box-shadow">
             <form action="<?php echo base_url('daily-entry-list'); ?>" method="post" id="statusChange">
-                <input type="hidden" name="hidstatus" value="<?php echo isset($status)?$status:'inactive'; ?>">
+                <input type="hidden" name="hidstatus" value="<?php echo isset($status)?$status:'all'; ?>">
                 <input type="hidden" name="hidfrom" value="<?php echo isset($fromDate)?$fromDate:date('d-m-Y'); ?>">
                 <input type="hidden" name="hidto" value="<?php echo isset($toDate)?$toDate:date('d-m-Y'); ?>">
                 <table id="html5-extension" class="table dt-table-hover" style="width:100%">
