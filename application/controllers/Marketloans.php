@@ -41,6 +41,7 @@ class Marketloans extends CI_Controller {
 			'title'	  	=> 'Total',
 			'sum_cols'	=> [2,4,5],
 			'empty' 	=> 4);
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -165,6 +166,22 @@ class Marketloans extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete market loans.');
+			redirect('market-loans-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Market Loan deleted successfully');
+		redirect('market-loans-list');
 	}
 
 	public function formCustomization($selectid = '')

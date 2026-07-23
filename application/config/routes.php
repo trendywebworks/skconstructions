@@ -80,6 +80,7 @@ $route['market-loans-list'] = 'Marketloans';
 $route['market-loans-add'] = 'Marketloans/add';
 $route['market-loans-edit/(:num)'] = 'Marketloans/edit/$1';
 $route['market-loans-view/(:num)'] = 'Marketloans/view/$1';
+$route['market-loans-delete/(:num)'] = 'Marketloans/delete/$1';
 
 // Vehicle Expenses
 $route['vehicles-expenses-list'] = 'Vehicleexpenses';
@@ -142,6 +143,7 @@ $route['sites-list'] = 'Sites';
 $route['site-add'] = 'Sites/add';
 $route['site-edit/(:num)'] = 'Sites/edit/$1';
 $route['site-view/(:num)'] = 'Sites/view/$1';
+$route['site-delete/(:num)'] = 'Sites/delete/$1';
 $route['site-expenses'] = 'Sites/expenses';
 
 // Partners
@@ -155,6 +157,7 @@ $route['vehicles-list'] = 'Vehicles';
 $route['vehicle-add'] = 'Vehicles/add';
 $route['vehicle-edit/(:num)'] = 'Vehicles/edit/$1';
 $route['vehicle-view/(:num)'] = 'Vehicles/view/$1';
+$route['vehicle-delete/(:num)'] = 'Vehicles/delete/$1';
 
 // Office Staff
 $route['office-staff-list'] = 'Officestaff';

@@ -49,6 +49,13 @@ class Dailyentry extends CI_Controller {
 		    $data['status'] = $this->input->post('status');
 	    }
 	    else if($this->input->post('approve') || $this->input->post('pending')  || $this->input->post('delete') ){
+	        $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'));
+	        if($this->input->post('delete') && $userdata['role_id'] != 1)
+	        {
+	            $this->session->set_flashdata('error', 'Only admin users can delete daily entries.');
+	            redirect($this->_link_start.'-list');
+	        }
+
 	        if($this->input->post('approve')){
 	            $status = 'active';
 	        }
@@ -56,7 +63,7 @@ class Dailyentry extends CI_Controller {
 	            $status = 'inactive';
 	        }
 	        else if($this->input->post('delete')){
-	            $status = 'delete';
+	            $status = 'deleted';
 	        }
 	       // $status = ($this->input->post('approve'))?'active':'';
 	        $ids = $this->input->post('selectRow');
@@ -378,10 +385,18 @@ class Dailyentry extends CI_Controller {
 	}
 	
 	public function delete($id){
-	    $status = ($userdata['role_id'] != 1 )?'delete_pending':'deleted';
-	    $msg = ($userdata['role_id'] != 1 )?'Daily Entry submited for delete approval.':'Daily Entry deleted successfully';
-	    $this->common_model->updateWhere($this->_table, array('id' => $id), array('status' => $status));
-	    $this->session->set_flashdata('success', $msg);
+	    $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'));
+	    if($userdata['role_id'] != 1)
+	    {
+	        $this->session->set_flashdata('error', 'Only admin users can delete daily entries.');
+	        redirect($this->_link_start.'-list');
+	    }
+
+	    $this->common_model->updateWhere($this->_table, array('id' => $id), array(
+	    	'status'		=>	'deleted',
+	    	'updated_at'	=>	currentDateTime()
+	    ));
+	    $this->session->set_flashdata('success', 'Daily Entry deleted successfully');
 	    redirect($this->_link_start.'-list');
 	}
 

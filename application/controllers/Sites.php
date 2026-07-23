@@ -38,6 +38,7 @@ class Sites extends CI_Controller {
 		$select = 'id,created_at,entry_date,site_name,site_address,status,remarks';
 		$data['list'] = $this->common_model->getAllWhereSelectList($this->_table, $select, array('status != ' => 'deleted'));
 		$data['theads'] = ['date', 'site_name', 'site_address', 'status', 'remarks', 'action'];
+		$data['allow_delete'] = ($this->_role == 1);
 		$data['page'] = 'list';
 		$this->load->view('main', $data);
 	}
@@ -146,6 +147,22 @@ class Sites extends CI_Controller {
 
 		$data['page'] = 'view';
 		$this->load->view('main', $data);
+	}
+
+	public function delete($id)
+	{
+		if($this->_role != 1)
+		{
+			$this->session->set_flashdata('error', 'Only admin users can delete sites.');
+			redirect('sites-list');
+		}
+
+		$this->common_model->updateWhere($this->_table, array('id' => $id), array(
+			'status'		=>	'deleted',
+			'updated_at'	=>	currentDateTime()
+		));
+		$this->session->set_flashdata('success', 'Site deleted successfully');
+		redirect('sites-list');
 	}
 
 	public function expenses()
