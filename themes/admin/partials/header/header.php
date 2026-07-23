@@ -4,7 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Dashboard :: S. K. Constructions Jagdalpur</title>
+    <?php
+        $pageTitle = 'Dashboard';
+        if(isset($titles['title']) && $titles['title'] != '')
+        {
+            $pageTitle = $titles['title'];
+        }
+        else if(isset($title) && $title != '')
+        {
+            $pageTitle = $title;
+        }
+    ?>
+    <title><?php echo html_escape($pageTitle); ?> - S.K. Constructions Jagdalpur</title>
     <link rel="icon" type="image/x-icon" href="src/assets/img/favicon.ico"/>
 
     <link href="src/layouts/css/loader.css" rel="stylesheet" type="text/css" />
