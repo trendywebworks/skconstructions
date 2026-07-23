@@ -58,7 +58,7 @@
     <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
         <div class="widget widget-chart-two">
             <div class="widget-heading">
-                <h5 class="">Expenses - <?php echo date('Y'); ?></h5>
+                <h5 class="">Total Expense</h5>
             </div>
             <div class="widget-content">
                 <input type="hidden" name="daily_expense" id="daily_expense" value="<?php echo $allExpenses['daily_expense']; ?>">
@@ -74,8 +74,7 @@
             <div class="widget-content">
                 <div class="w-numeric-value">
                     <div class="w-content">
-                        <span class="w-value">Daily Expenses</span>
-                        <span class="w-numeric-title">Go to columns for details.</span>
+                        <span class="w-value">Daily Entry</span>
                     </div>
                     <div class="w-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
@@ -184,9 +183,9 @@
         </div>
     </div>
 
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-        <div class="widget-one widget">
-            <div class="widget-content">
+	    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
+	        <div class="widget-one widget">
+	            <div class="widget-content">
                 <div class="w-numeric-value">
                     <div class="w-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
@@ -200,7 +199,26 @@
                     <div id="total-orders"></div>
                 </div>
             </div>
-        </div>
-    </div>
+	        </div>
+	    </div>
 
-</div>
+	    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
+	        <div class="widget-one widget">
+	            <div class="widget-content">
+	                <div class="w-numeric-value">
+	                    <div class="w-icon">
+	                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+	                    </div>
+	                    <div class="w-content">
+	                        <span class="w-value">₹<?php echo (isset($summary['staff_loan']))?number_format($summary['staff_loan'], 0):0; ?></span>
+	                        <span class="w-numeric-title">Total Staff Loans</span>
+	                    </div>
+	                </div>
+	                <div class="w-chart">
+	                    <div id="total-staff-loans"></div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+
+	</div>
