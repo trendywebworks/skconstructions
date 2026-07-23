@@ -40,7 +40,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'purchase')
 		{
 			$this->_table = 'purchase';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_table.reference_no,$this->_suppliers_table.firm_name as firm_name,CONCAT('₹', format(total_amount,2)) as total_amount,DATE_FORMAT($this->_table.purchase_date,'%d/%m/%Y') as purchase_date,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_table.reference_no,$this->_suppliers_table.firm_name as firm_name,CONCAT('₹', format(total_amount,2)) as total_amount,DATE_FORMAT($this->_table.purchase_date,'%d-%m-%Y') as purchase_date,$this->_table.remarks";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_suppliers_table, "$this->_suppliers_table.id=$this->_table.supplier_id", 'inner');
 
@@ -130,7 +130,7 @@ class Report_Model extends MY_Model
 		else if($report_type == 'staffl')
 		{
 			$this->_table = 'staff_loans';
-			$select = "$this->_table.id,$this->_table.created_at,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,2)) as loan_amount,DATE_FORMAT($this->_table.created_at,'%d/%m/%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d/%m/%Y') as loan_last_date,$this->_table.remarks";
+			$select = "$this->_table.id,$this->_table.created_at,$this->_staff_table.name as employee_name, CONCAT('₹', format(loan_amount,2)) as loan_amount,DATE_FORMAT($this->_table.created_at,'%d-%m-%Y') as loan_date,CONCAT(loan_tenure, ' Month(s)') as loan_tenure,DATE_FORMAT($this->_table.loan_last_date,'%d-%m-%Y') as loan_last_date,$this->_table.remarks";
 			$this->db->select($select)->from($this->_table);
 			$this->db->join($this->_staff_table, "$this->_staff_table.id=$this->_table.employee_id", 'inner');
 

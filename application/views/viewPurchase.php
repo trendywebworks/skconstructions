@@ -6,7 +6,7 @@
                     <label for="date">Date</label>
                     <div id="datepickerx" class="input-group datex" data-date-format="dd-mm-yyyy">
                         <span class="input-group-addon"></span>
-                        <?php echo (isset($list) && isset($list[0]['entry_date']))?dayDateFormat($list[0]['entry_date']):date('Y-m-d'); ?>
+                        <?php echo (isset($list) && isset($list[0]['entry_date']))?dayDateFormat($list[0]['entry_date']):date('d-m-Y'); ?>
                     </div>
                 </div>
                 <div class="col-4 mb-4">
