@@ -44,6 +44,8 @@
 
     <script>
         $(function () {
+            var today = new Date();
+            var todayValue = ('0' + today.getDate()).slice(-2) + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + today.getFullYear();
             var datepickerOptions = {
                 autoclose: true,
                 clearBtn: true,
@@ -67,6 +69,11 @@
                 if (/^\d{4}-\d{2}-\d{2}$/.test($field.val())) {
                     var parts = $field.val().split('-');
                     $field.val(parts[2] + '-' + parts[1] + '-' + parts[0]);
+                }
+
+                var formAction = ($field.closest('form').attr('action') || '').toLowerCase();
+                if ($field.val() === '' && formAction.indexOf('-add') !== -1) {
+                    $field.val(todayValue);
                 }
 
                 $field
@@ -303,6 +310,22 @@ $(document).on('change', '#start_km,#end_km', function()
     var end_km = $('#end_km').val() || 0;
     var total_km = parseInt(end_km) - parseInt(start_km);
     $("#total_km").val(total_km);
+});
+</script>
+
+<script type="text/javascript">
+$(document).on('blur change', '#amount,#diesel_amount,#income', function()
+{
+    if(!$('#diesel_amount').length || !$('#income').length || !$('#balance').length)
+    {
+        return;
+    }
+
+    var amount = parseFloat($('#amount').val()) || 0;
+    var dieselAmount = parseFloat($('#diesel_amount').val()) || 0;
+    var income = parseFloat($('#income').val()) || 0;
+    var balance = income - (amount + dieselAmount);
+    $('#balance').val(balance.toFixed(2));
 });
 </script>
 

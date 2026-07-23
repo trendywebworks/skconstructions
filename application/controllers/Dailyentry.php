@@ -21,7 +21,9 @@ class Dailyentry extends CI_Controller {
 		$this->_suppliers_table = 'suppliers';
 		$this->_bank_table = 'banks';
 		$this->_employee_table = 'office_staffs';
+		$this->_vehicle_table = 'vehicles';
 		$this->_market_loans_table = 'market_loans';
+		$this->_vehicle_running_table = 'vehicle_running_km';
 		$this->_vehicle_expenses_table = 'vehicle_expenses';
 		$this->_cc_account_table = 'cc_account';
 		$this->_staff_loans_table = 'staff_loans';
@@ -33,6 +35,7 @@ class Dailyentry extends CI_Controller {
 
 		$this->load->model('Dailyentry_Model');
 		$this->load->model('Marketloans_Model');
+		$this->load->model('VehicleRunning_Model');
 		$this->load->model('VehicleExpenses_Model');
 		$this->load->model('Ccaccount_Model');
 		$this->load->model('Officeexpense_Model');
@@ -114,6 +117,7 @@ class Dailyentry extends CI_Controller {
 
 	public function add()
 	{
+		$this->ensureDailyEntryOptions();
 		$data['titles'] = array(
 			'title'	=>	$this->_title,
 			'subtitle'	=>	'Add New',
@@ -131,19 +135,19 @@ class Dailyentry extends CI_Controller {
 
             if($this->form_validation->run() == true)
             {
-            	$expense_option = $this->input->post('etype_id');
+            	$expense_option = ($this->input->post('etype_id')!='')?$this->input->post('etype_id'):$this->input->post('option');
             	
             	$expense_option_details = $this->getOptionTable($expense_option);
             	$subtable = $expense_option_details['table_name'];
 
 
-            	$entryDate = date('Y-m-d', strtotime($this->input->post('date')));
+            	$entryDate = toDbDateFormat($this->input->post('date'));
             	$remarks = $this->input->post('remarks');
             	$created_at = currentDateTime();
             	
 
             	$expense_id_type = 1;
-            	$optionArray = $this->getArrayvalues($expense_option);
+            	$optionArray = $this->getArrayvalues($expense_option, $expense_option_details);
             	$insSubArray = (isset($optionArray['insSubArray']))?$optionArray['insSubArray']:[];
             	$expense_amount = $optionArray['expense_amount'];
 
@@ -207,6 +211,7 @@ class Dailyentry extends CI_Controller {
 
 	public function edit($id)
 	{
+		$this->ensureDailyEntryOptions();
 		$data['id'] = $id;
 		$data['titles'] = array(
 			'title'	=>	$this->_title,
@@ -230,7 +235,7 @@ class Dailyentry extends CI_Controller {
             	$subtable = $expense_option_details['table_name'];
 
 
-            	$entryDate = date('Y-m-d', strtotime($this->input->post('date')));
+            	$entryDate = toDbDateFormat($this->input->post('date'));
             	$remarks = $this->input->post('remarks');
 
             	$id = $this->input->post('id');
@@ -248,7 +253,7 @@ class Dailyentry extends CI_Controller {
 
             	$expense_id_type = 1;
             	
-            	$optionArray = $this->getArrayvalues($expense_option);
+            	$optionArray = $this->getArrayvalues($expense_option, $expense_option_details);
             	$insSubArray = $optionArray['insSubArray'];
             	$expense_amount = $optionArray['expense_amount'];
 
@@ -280,7 +285,7 @@ class Dailyentry extends CI_Controller {
             		{
             			$insSubArray['entry_date'] = $entryDate;
 		            	$insSubArray['remarks'] = $remarks;
-		            	$insSubArray['created_at'] = $created_at;
+		            	$insSubArray['updated_at'] = $updated_at;
 		            	$insSubArray['status'] = $status;
 
 						$reference_id = $this->common_model->updateWhere($subtable, array('id' => $reference_id), $insSubArray);
@@ -325,7 +330,7 @@ class Dailyentry extends CI_Controller {
 			{
 				$data['fields'] = $this->db->field_data($data['table_name']);
 				$data['details'] = $this->common_model->getWhereRow($data['table_name'], '*', array('id'=>$data['de_details']['reference_id']));
-				$data['formCustomization'] = $this->getFormCustomization($option, $data['details']);
+				$data['formCustomization'] = $this->getFormCustomization($option, $data['details'], $expense_option_details);
 				$data['divForm'] = $this->load->view('customFields', $data, true);
 			}
 		}
@@ -339,6 +344,7 @@ class Dailyentry extends CI_Controller {
 
 	public function view($id)
 	{
+		$this->ensureDailyEntryOptions();
 		$data['id'] = $id;
 		$data['titles'] = array(
 			'title'	=>	$this->_title,
@@ -376,7 +382,7 @@ class Dailyentry extends CI_Controller {
 			{
 				$data['fields'] = $this->db->field_data($data['table_name']);
 				$data['details'] = $this->common_model->getWhereRow($data['table_name'], '*', array('id'=>$data['de_details']['reference_id']));
-				$data['formCustomization'] = $this->getFormCustomization($option, $data['details']);
+				$data['formCustomization'] = $this->getFormCustomization($option, $data['details'], $expense_option_details);
 				$data['divForm'] = $this->load->view('customFields', $data, true);
 			}
 		}
@@ -405,10 +411,13 @@ class Dailyentry extends CI_Controller {
 	    redirect($this->_link_start.'-list');
 	}
 
-	public function getArrayvalues($id)
+	public function getArrayvalues($id, $option_details = array())
 	{
 		$data = [];
-		if($id == 3 || $id == 4 || $id == 8)
+		$table_name = (isset($option_details['table_name']))?$option_details['table_name']:'';
+		$with_reference = (isset($option_details['with_reference']))?$option_details['with_reference']:0;
+
+		if($with_reference == 1 || $id == 3 || $id == 4 || $id == 8)
     	{
     		$data['expense_amount'] = $this->input->post('amount');
     		$data['insSubArray'] = array();
@@ -423,7 +432,7 @@ class Dailyentry extends CI_Controller {
 				'loan_last_date'	=>	toDbDateFormat($this->input->post('loan_last_date'))
 			);
     	}
-		else if($id == 12)
+		else if($id == 12 || $table_name == $this->_market_loans_table)
     	{
     		$data['expense_amount'] = $this->input->post('loan_amount');//amount without interest is the income
     		$data['insSubArray'] = array(
@@ -432,6 +441,27 @@ class Dailyentry extends CI_Controller {
 				'interest'				=>	$this->input->post('interest'),
 				'total_installments'	=>	$this->input->post('total_installments'),
 				'total_amount'			=>	$this->input->post('total_amount')
+			);
+    	}
+    	else if($table_name == $this->_vehicle_running_table)
+    	{
+    		$amount = (float) $this->input->post('amount');
+    		$diesel_amount = (float) $this->input->post('diesel_amount');
+    		$income = (float) $this->input->post('income');
+    		$expense_amount = $amount + $diesel_amount;
+    		$data['expense_amount'] = ($this->input->post('expense_type') == 'income')?$income:$expense_amount;
+    		$data['insSubArray'] = array(
+				'vehicle_id'	=>	$this->input->post('vehicle_id'),
+				'vehicle_no'	=>	$this->input->post('vehicle_no'),
+				'party_name'	=>	$this->input->post('party_name'),
+				'start_km'		=>	$this->input->post('start_km'),
+				'end_km'		=>	$this->input->post('end_km'),
+				'total_km'		=>	$this->input->post('total_km'),
+				'amount'		=>	$amount,
+				'diesel_amount'	=>	$diesel_amount,
+				'particular'	=>	$this->input->post('particular'),
+				'income'		=>	$income,
+				'balance'		=>	$this->input->post('balance')
 			);
     	}
     	else if($id == 13)
@@ -467,18 +497,30 @@ class Dailyentry extends CI_Controller {
 			);
     	}
 
+    	if(!isset($data['expense_amount']))
+    	{
+    		$data['expense_amount'] = $this->input->post('amount');
+    		$data['insSubArray'] = array();
+    	}
+
     	return $data;
 	}
 
-	public function getFormCustomization($id, $details='')
+	public function getFormCustomization($id, $details='', $option_details = array())
 	{
+		$table_name = (isset($option_details['table_name']))?$option_details['table_name']:'';
+
 		if($id == 10)
 		{
 			$formCustomization = $this->staffLoanFields((!empty($details))?$details['party_id']:'');
 		}
-		else if($id == 12)
+		else if($id == 12 || $table_name == $this->_market_loans_table)
 		{
 			$formCustomization = $this->marketLoanFields((!empty($details))?$details['party_id']:'');
+		}
+		else if($table_name == $this->_vehicle_running_table)
+		{
+			$formCustomization = $this->vehicleRunningFields((!empty($details))?$details['vehicle_id']:'');
 		}
 		else if($id == 13)
 		{
@@ -525,6 +567,7 @@ class Dailyentry extends CI_Controller {
 
 	public function getExpenseDrop()
 	{
+		$this->ensureDailyEntryOptions();
 		$expense_type = $this->input->post('expense_type');
 		$where = array(
 			'expense'		=>	$expense_type,
@@ -546,6 +589,7 @@ class Dailyentry extends CI_Controller {
 
 	public function getOptionFields()
 	{
+		$this->ensureDailyEntryOptions();
 		$option = $this->input->post('option');
 		$etype = $this->input->post('etype');
 		$expense_option_details = $this->getOptionTable($option, $etype);
@@ -560,7 +604,7 @@ class Dailyentry extends CI_Controller {
 			else
 			{
 				$data['fields'] = $this->db->field_data($data['table_name']);
-				$data['formCustomization'] = $this->getFormCustomization($option, '');
+				$data['formCustomization'] = $this->getFormCustomization($option, '', $expense_option_details);
 				$divForm = $this->load->view('customFields', $data, true);
 			}
 		}
@@ -644,6 +688,46 @@ class Dailyentry extends CI_Controller {
 		return $select;
 	}
 
+	private function ensureDailyEntryOptions()
+	{
+		$this->ensureDailyEntryOption('Market Loan', 'income', $this->_market_loans_table);
+		$this->ensureDailyEntryOption('Vehicle Running', 'expense', $this->_vehicle_running_table);
+	}
+
+	private function ensureDailyEntryOption($title, $type, $table)
+	{
+		$existing = $this->db->select('id, status')
+			->from($this->_expense_type_table)
+			->where(array('table_name' => $table, 'expense' => $type))
+			->where('status !=', 'deleted')
+			->get()
+			->row_array();
+
+		if(empty($existing))
+		{
+			$this->common_model->insert($this->_expense_type_table, array(
+				'entry_date'	=>	date('Y-m-d'),
+				'expense_type'	=>	$title,
+				'expense'		=>	$type,
+				'remarks'		=>	'',
+				'is_show'		=>	1,
+				'table_name'	=>	$table,
+				'with_reference'=>	0,
+				'created_at'	=>	currentDateTime(),
+				'status'		=>	'active'
+			));
+		}
+		else if($existing['status'] != 'active')
+		{
+			$this->common_model->updateWhere($this->_expense_type_table, array('id' => $existing['id']), array(
+				'expense_type'	=>	$title,
+				'with_reference'=>	0,
+				'status'		=>	'active',
+				'updated_at'	=>	currentDateTime()
+			));
+		}
+	}
+
 	public function getOptionTable($id, $etype='')
 	{
 		$option_details = $this->common_model->getWhereRow($this->_expense_type_table, '*', array('id' => $id));
@@ -695,7 +779,6 @@ class Dailyentry extends CI_Controller {
 			$table = $this->_staff_loans_table;
 			$data['emi_details'] = $this->Staffloans_Model->getAllStaffLoansSumByStaff($id);
 		}
-		echo '<pre>';print_r($data['emi_details']);
 		$data['option'] = $option;
 		$data['paid'] = $this->db->select('sum(amount) as paid')->from($this->_table)->where(array('payment_of_id' =>$id, 'expense_id' => $option, 'status' => 'active'))->get()->row_array();
 		$divForm = $this->load->view('customEmiFields', $data, true);
@@ -722,6 +805,62 @@ class Dailyentry extends CI_Controller {
 				'name'		=>	'Total Amount',
 				'readonly'	=>	'readonly',
 				'type'		=>	'text',)
+		);
+		return $data;
+	}
+
+	public function vehicleRunningFields($selectid = '')
+	{
+		$data = array(
+			'fields'    => array('vehicle_id', 'vehicle_no', 'party_name', 'start_km', 'end_km', 'total_km', 'amount', 'diesel_amount', 'particular', 'income', 'balance'),
+			'vehicle_id'	=>	array(
+				'name'		=>	'Vehicle Name',
+				'column'	=>	'col-md-4',
+				'type'		=>	'select',
+				'values'	=>	getDropdownOptions($this->_vehicle_table, 'vehicle_name', $selectid)),
+			'vehicle_no' => array(
+				'name'		=>	'Vehicle Number',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text',
+				'readonly'	=>	'readonly'),
+			'party_name' => array(
+				'name'		=>	'Party Name',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text'),
+			'start_km' => array(
+				'name'		=>	'Start KM',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text'),
+			'end_km' => array(
+				'name'		=>	'End KM',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text'),
+			'total_km' => array(
+				'name'		=>	'Total KM',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text',
+				'readonly'	=>	'readonly'),
+			'amount' => array(
+				'name'		=>	'Amount',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text'),
+			'diesel_amount' => array(
+				'name'		=>	'Diesel Amount',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text'),
+			'particular' => array(
+				'name'		=>	'Particular',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text'),
+			'income' => array(
+				'name'		=>	'Income',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text'),
+			'balance' => array(
+				'name'		=>	'Balance',
+				'column'	=>	'col-md-4',
+				'type'		=>	'text',
+				'readonly'	=>	'readonly')
 		);
 		return $data;
 	}

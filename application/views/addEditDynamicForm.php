@@ -27,6 +27,7 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
 
                         $readonly = '';
                         $name = '';
+                        $custom = array();
 
                         $col = '';
                         if(isset($formCustomization) && in_array($field->name, $formCustomization['fields']))
@@ -41,6 +42,17 @@ $userdata = $this->User_model->getUserDetails($this->session->userdata('user_id'
                             $setValue = $custom['value'];
                         }
                         $fieldValue =  (isset($details) && isset($details[$field->name]))?$details[$field->name]:$setValue; 
+                        if($field->type == 'date' || (isset($custom['type']) && $custom['type'] == 'date'))
+                        {
+                            if($fieldValue != '')
+                            {
+                                $fieldValue = date('d-m-Y', strtotime($fieldValue));
+                            }
+                            else if(!isset($details))
+                            {
+                                $fieldValue = date('d-m-Y');
+                            }
+                        }
                         
                         //only for expense page - starts
                         if(isset($details) && isset($details[$field->name]) && $field->name=='expense_type'){
